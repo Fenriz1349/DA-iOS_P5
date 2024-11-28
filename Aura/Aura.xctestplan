@@ -1,0 +1,30 @@
+{
+  "configurations" : [
+    {
+      "id" : "71E19C46-F8CD-453A-8DFB-8F083134068D",
+      "name" : "Test Scheme Action",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "targetForVariableExpansion" : {
+      "containerPath" : "container:Aura.xcodeproj",
+      "identifier" : "53D418772AC7099A0070ADB1",
+      "name" : "Aura"
+    },
+    "testExecutionOrdering" : "random"
+  },
+  "testTargets" : [
+    {
+      "parallelizable" : false,
+      "target" : {
+        "containerPath" : "container:Aura.xcodeproj",
+        "identifier" : "68C99C772CF86B35002F75A0",
+        "name" : "AuraTests"
+      }
+    }
+  ],
+  "version" : 1
+}
