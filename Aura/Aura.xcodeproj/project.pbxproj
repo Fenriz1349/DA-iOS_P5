@@ -20,6 +20,12 @@
 		53D4189F2AC717890070ADB1 /* MoneyTransferViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53D4189E2AC717890070ADB1 /* MoneyTransferViewModel.swift */; };
 		53D418A12AC71B8F0070ADB1 /* View+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53D418A02AC71B8F0070ADB1 /* View+Extensions.swift */; };
 		68C99C832CF877EF002F75A0 /* Email.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68C99C822CF877EF002F75A0 /* Email.swift */; };
+		68C99C892CF8FAA4002F75A0 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68C99C882CF8FAA4002F75A0 /* User.swift */; };
+		68C99C8B2CF8FB8E002F75A0 /* Transaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68C99C8A2CF8FB8E002F75A0 /* Transaction.swift */; };
+		68C99C8D2CF9AF2A002F75A0 /* Double+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68C99C8C2CF9AF2A002F75A0 /* Double+Ext.swift */; };
+		68C99C902CF9B76C002F75A0 /* ErrorLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68C99C8F2CF9B76C002F75A0 /* ErrorLabel.swift */; };
+		68C99C952CF9D063002F75A0 /* URLRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68C99C942CF9D063002F75A0 /* URLRequest.swift */; };
+		68C99C972CF9D0D5002F75A0 /* AuthentificationRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68C99C962CF9D0D5002F75A0 /* AuthentificationRepository.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,6 +55,12 @@
 		68C99C782CF86B35002F75A0 /* AuraTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AuraTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		68C99C812CF8738E002F75A0 /* Aura.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = Aura.xctestplan; sourceTree = "<group>"; };
 		68C99C822CF877EF002F75A0 /* Email.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Email.swift; sourceTree = SOURCE_ROOT; };
+		68C99C882CF8FAA4002F75A0 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = SOURCE_ROOT; };
+		68C99C8A2CF8FB8E002F75A0 /* Transaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Transaction.swift; sourceTree = SOURCE_ROOT; };
+		68C99C8C2CF9AF2A002F75A0 /* Double+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Double+Ext.swift"; sourceTree = "<group>"; };
+		68C99C8F2CF9B76C002F75A0 /* ErrorLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorLabel.swift; sourceTree = "<group>"; };
+		68C99C942CF9D063002F75A0 /* URLRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLRequest.swift; sourceTree = "<group>"; };
+		68C99C962CF9D0D5002F75A0 /* AuthentificationRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthentificationRepository.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -95,6 +107,8 @@
 		53D4187A2AC7099A0070ADB1 /* Aura */ = {
 			isa = PBXGroup;
 			children = (
+				68C99C932CF9D030002F75A0 /* HTTPClient */,
+				68C99C8E2CF9B759002F75A0 /* ExtractedVews */,
 				53D418962AC70FC50070ADB1 /* Utils */,
 				53D4188B2AC709B80070ADB1 /* Models */,
 				53D4188A2AC709B30070ADB1 /* ViewModels */,
@@ -131,6 +145,7 @@
 				53D4189A2AC711990070ADB1 /* AuthenticationViewModel.swift */,
 				53D4189C2AC715AA0070ADB1 /* AccountDetailViewModel.swift */,
 				53D4189E2AC717890070ADB1 /* MoneyTransferViewModel.swift */,
+				68C99C962CF9D0D5002F75A0 /* AuthentificationRepository.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -139,6 +154,8 @@
 			isa = PBXGroup;
 			children = (
 				68C99C822CF877EF002F75A0 /* Email.swift */,
+				68C99C882CF8FAA4002F75A0 /* User.swift */,
+				68C99C8A2CF8FB8E002F75A0 /* Transaction.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -148,8 +165,25 @@
 			children = (
 				53D418982AC70FD80070ADB1 /* Color+Extensions.swift */,
 				53D418A02AC71B8F0070ADB1 /* View+Extensions.swift */,
+				68C99C8C2CF9AF2A002F75A0 /* Double+Ext.swift */,
 			);
 			path = Utils;
+			sourceTree = "<group>";
+		};
+		68C99C8E2CF9B759002F75A0 /* ExtractedVews */ = {
+			isa = PBXGroup;
+			children = (
+				68C99C8F2CF9B76C002F75A0 /* ErrorLabel.swift */,
+			);
+			path = ExtractedVews;
+			sourceTree = "<group>";
+		};
+		68C99C932CF9D030002F75A0 /* HTTPClient */ = {
+			isa = PBXGroup;
+			children = (
+				68C99C942CF9D063002F75A0 /* URLRequest.swift */,
+			);
+			path = HTTPClient;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -261,12 +295,18 @@
 				53D418952AC70ABF0070ADB1 /* MoneyTransferView.swift in Sources */,
 				53D4189B2AC711990070ADB1 /* AuthenticationViewModel.swift in Sources */,
 				53D4189D2AC715AA0070ADB1 /* AccountDetailViewModel.swift in Sources */,
+				68C99C8D2CF9AF2A002F75A0 /* Double+Ext.swift in Sources */,
 				68C99C832CF877EF002F75A0 /* Email.swift in Sources */,
+				68C99C8B2CF8FB8E002F75A0 /* Transaction.swift in Sources */,
+				68C99C952CF9D063002F75A0 /* URLRequest.swift in Sources */,
 				53D418912AC70A920070ADB1 /* AuthenticationView.swift in Sources */,
 				53D418932AC70AB10070ADB1 /* AccountDetailView.swift in Sources */,
 				53D4189F2AC717890070ADB1 /* MoneyTransferViewModel.swift in Sources */,
+				68C99C892CF8FAA4002F75A0 /* User.swift in Sources */,
 				53D4188D2AC709F40070ADB1 /* AppViewModel.swift in Sources */,
 				53D418A12AC71B8F0070ADB1 /* View+Extensions.swift in Sources */,
+				68C99C902CF9B76C002F75A0 /* ErrorLabel.swift in Sources */,
+				68C99C972CF9D0D5002F75A0 /* AuthentificationRepository.swift in Sources */,
 				53D418992AC70FD80070ADB1 /* Color+Extensions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

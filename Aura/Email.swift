@@ -16,6 +16,10 @@ class Email {
         self.domain = domain
     }
     
+    var emailAdress : String {
+        return local.name + "@" + domain.name + "." + domain.domExtension
+    }
+    
     // fonction qui verifie si une string est un adresse mail valide
     static func isValidEmail(_ email: String) -> Bool {
         return Email.from(email) != nil
