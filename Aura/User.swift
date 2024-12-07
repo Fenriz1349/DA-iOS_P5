@@ -12,15 +12,17 @@ class User: Identifiable {
     var userEmail : Email
     var userPassword: String
     var transactions: [Transaction]
-    var token: UUID?
+    // ne pas stocker le token et utiliser un keychain service
+    let token: UUID?
     
     var totalAmount: Double {
         return transactions.map {$0.amount}.reduce(0,+)
     }
     
-    init(userEmail: Email, userPassword: String, transactions: [Transaction]) {
+    init(userEmail: Email, userPassword: String, transactions: [Transaction], token: UUID?) {
         self.userEmail = userEmail
         self.userPassword = userPassword
         self.transactions = transactions
+        self.token = token
     }
 }

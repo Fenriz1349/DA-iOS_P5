@@ -6,7 +6,9 @@
 //
 
 import Foundation
-// Même si ils sont autorisé dans certains cas, on partira du principe que les accents et caractères speciaux sont interdit
+
+// Même si ils sont autorisés dans certains cas, on partira du principe que les accents et caractères speciaux sont interdit.
+// Pour eviter les erreurs de saisies lié au clavier mobile, et car la norme n'est pas d'utiliser les majuscules, toutes les saisies seront .lowercased()
 class Email {
     let local: Local
     let domain: Domain
@@ -42,6 +44,10 @@ class Email {
 
 struct Local {
     let name: String
+    
+    init(name: String) {
+        self.name = name.lowercased()
+    }
     // fonction pour verifier si la partie local d'une adresse mail est valide
     func isValid () -> Bool {
         // Ne doit pas depasser 64 caractère
@@ -56,7 +62,7 @@ struct Local {
         // Ne doit pas avoir 2 point consecutif, et doit contenir uniquement :
         // "A" à "Z", "a" à "z", "0" à "9" et les caractères à la fin
         guard !name.contains(",") else { return false }
-        let localNameRegex = try! Regex("^(?!.*\\.\\.)[A-Za-z0-9 .!#$%&'*+-/=?^_`{|}~]+$")
+        let localNameRegex = try! Regex("^(?!.*\\.\\.)[a-z0-9 .!#$%&'*+-/=?^_`{|}~]+$")
         return name.wholeMatch(of: localNameRegex) != nil
     }
 }
@@ -65,6 +71,11 @@ struct Domain {
     let name: String
     let domExtension: String
     
+    init(name: String, domExtension: String) {
+        self.name = name.lowercased()
+        self.domExtension = domExtension.lowercased()
+    }
+    
     func isValidName () -> Bool {
         // Ne doit ni commencer, ni terminer par un point
         guard let first = name.first , first != ".", first != "-",
@@ -72,7 +83,7 @@ struct Domain {
             return  false
         }
         // Ne doit contenir que des lettres min et maj et des chiffres, . et -
-        let domainNameRegex = try! Regex("^(?!.*\\.\\.)[A-Za-z0-9.-]+$")
+        let domainNameRegex = try! Regex("^(?!.*\\.\\.)[a-z0-9.-]+$")
         return name.wholeMatch(of: domainNameRegex) != nil
     }
     
@@ -80,7 +91,7 @@ struct Domain {
         // l'extention de domaine doit avoir au moins 2 caractères et moins de 63
         guard domExtension.count >= 2 && domExtension.count <= 63 else { return false }
         // Elle ne doit comporter que des lettres, majuscules ou minuscule
-        let domainExtensionRegex = try! Regex("[A-Za-z]+$")
+        let domainExtensionRegex = try! Regex("[a-z]+$")
         return domExtension.wholeMatch(of:domainExtensionRegex) != nil
     }
     

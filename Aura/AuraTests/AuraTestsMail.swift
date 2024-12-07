@@ -8,7 +8,7 @@
 import XCTest
 @testable import Aura
 
-class AuraTests: XCTestCase {
+class AuraTestsMail: XCTestCase {
 
     // MARK: - Local Test
     func testLocal_isValid_invalidNames () {
@@ -41,6 +41,15 @@ class AuraTests: XCTestCase {
         XCTAssertTrue(Local(name: "TEST").isValid())
         XCTAssertTrue(Local(name: "t").isValid())
         XCTAssertTrue(Local(name: "ceciestunetreslonguestringquifaitexactement64caracterestoutjuste").isValid())
+    }
+    
+    func testLocal_isAlwaysLowercased() {
+        // Given
+        let testStrings = ["test", "Test", "TEST"]
+        // Then
+        for test in testStrings {
+            XCTAssertEqual(Local(name: test).name, "test")
+        }
     }
     
     // MARK: - Domain Test
@@ -82,8 +91,8 @@ class AuraTests: XCTestCase {
     
     func testDomain_isValid_invalidDomain () {
         // Given extension de 63 caractères et name de 256 caractères
-        XCTAssertFalse(Domain(name: "ceci-est-un-nom-de-domaine-incroyablement-long-mais-qui-ne-respecte-pas-toutes-les-regles-dont-celle-de-la-longueur-maximale-car-on-aime-les-defis-techniques.pourquoi-pas-mais-alors-vraiment-pourquoi-pas-avec-des-mots-supplementaires-et-des-points-pour-etre-sur"
-,  domExtension: "ceciestunetrestrestreslongueextenstionquicomportedescaracteresx").isValidDomain())
+        XCTAssertFalse(Domain(name: "ceci-est-un-nom-de-domaine-incroyablement-long-mais-qui-ne-respecte-pas-toutes-les-regles-dont-celle-de-la-longueur-maximale-car-on-aime-les-defis-techniques.pourquoi-pas-mais-alors-vraiment-pourquoi-pas-avec-des-mots-supplementaires-et-des-points-pour-etre-sur",
+                              domExtension: "ceciestunetrestrestreslongueextenstionquicomportedescaracteresx").isValidDomain())
         XCTAssertFalse(Domain(name: "", domExtension: "fr").isValidDomain())
         XCTAssertFalse(Domain(name: "test", domExtension: "..").isValidDomain())
     }
@@ -108,22 +117,23 @@ class AuraTests: XCTestCase {
             XCTAssertNil(Domain.from(testString))
         }
     }
-    func testDomain_from_returnDomain () {
+
+    func testDomain_from_returnDomainAndIsLowercased () {
         if let domain1 = Domain.from("test.fr") {
             XCTAssertEqual(domain1.name, "test")
             XCTAssertEqual(domain1.domExtension, "fr")
         }
         if let domain2 = Domain.from("AZERT123.com") {
-            XCTAssertEqual(domain2.name, "AZERT123")
+            XCTAssertEqual(domain2.name, "azert123")
             XCTAssertEqual(domain2.domExtension, "com")
         }
         if let domain3 = Domain.from("TEST.FR") {
-            XCTAssertEqual(domain3.name, "TEST")
-            XCTAssertEqual(domain3.domExtension, "FR")
+            XCTAssertEqual(domain3.name, "test")
+            XCTAssertEqual(domain3.domExtension, "fr")
         }
         if let domain4 = Domain.from("test.test.test.FR") {
             XCTAssertEqual(domain4.name, "test.test.test")
-            XCTAssertEqual(domain4.domExtension, "FR")
+            XCTAssertEqual(domain4.domExtension, "fr")
         }
     }
     
@@ -156,19 +166,19 @@ class AuraTests: XCTestCase {
             XCTAssertEqual(email1.domain.domExtension, "fr")
         }
         if let email2 = Email.from("Jean.Jacques!Chirac@AZERT123.com") {
-            XCTAssertEqual(email2.local.name, "Jean.Jacques!Chirac")
-            XCTAssertEqual(email2.domain.name, "AZERT123")
+            XCTAssertEqual(email2.local.name, "jean.jacques!chirac")
+            XCTAssertEqual(email2.domain.name, "azert123")
             XCTAssertEqual(email2.domain.domExtension, "com")
         }
         if let email3 = Email.from("TEST@TEST.FR") {
-            XCTAssertEqual(email3.local.name, "TEST")
-            XCTAssertEqual(email3.domain.name, "TEST")
-            XCTAssertEqual(email3.domain.domExtension, "FR")
+            XCTAssertEqual(email3.local.name, "test")
+            XCTAssertEqual(email3.domain.name, "test")
+            XCTAssertEqual(email3.domain.domExtension, "fr")
         }
         if let email4 = Email.from("test@test.test.test.FR") {
             XCTAssertEqual(email4.local.name, "test")
             XCTAssertEqual(email4.domain.name, "test.test.test")
-            XCTAssertEqual(email4.domain.domExtension, "FR")
+            XCTAssertEqual(email4.domain.domExtension, "fr")
         }
     }
     
@@ -199,5 +209,12 @@ class AuraTests: XCTestCase {
         XCTAssertTrue(Email.isValidEmail("Jean.Jacques!Chirac@AZERT123.com"))
         XCTAssertTrue(Email.isValidEmail("TEST@TEST.FR"))
         XCTAssertTrue(Email.isValidEmail("test@test.test.test.FR"))
+    }
+    
+    func testEmailAdress() {
+        // Given
+        let email = Email(local: Local(name: "test"), domain: Domain(name: "test", domExtension: "com"))
+        // Then
+        XCTAssertEqual(email.emailAdress, "test@test.com")
     }
 }

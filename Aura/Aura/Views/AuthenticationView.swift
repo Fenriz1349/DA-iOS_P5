@@ -46,12 +46,8 @@ struct AuthenticationView: View {
                 
                 Button(action: {
                     Task {
-                            do {
-                                try await viewModel.login(usermail: username, password: password)
-                            } catch {
-                                print("Erreur lors de la connexion : \(error.localizedDescription)")
-                            }
-                        }
+                        await viewModel.login(usermail: username, password: password)
+                    }
                 }) {
                     Text("Se connecter")
                         .foregroundColor(.white)
@@ -61,8 +57,7 @@ struct AuthenticationView: View {
                         .cornerRadius(8)
                 }
                 VStack {
-                    if viewModel.showError,
-                       let message = viewModel.errorMessage {
+                    if let message = viewModel.errorMessage {
                         ErrorLabel(message: message)
                             .transition(.move(edge: .top).combined(with: .opacity))
                             .task {
@@ -77,13 +72,12 @@ struct AuthenticationView: View {
             .padding(.horizontal, 40)
         }
         .onTapGesture {
-            self.endEditing(true)  // This will dismiss the keyboard when tapping outside
+            self.endEditing(true)
         }
     }
 }
 
 #Preview {
     AuthenticationView(viewModel: AuthenticationViewModel({
-        
     }))
 }

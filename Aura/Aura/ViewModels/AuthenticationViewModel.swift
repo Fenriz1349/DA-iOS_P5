@@ -8,62 +8,63 @@
 import SwiftUI
 
 class AuthenticationViewModel: ObservableObject {
-    let repository = AuthentificationRepository()
+    let repository: AuthenticationRepository
     @Published var user: User?
-    @Published var showError = false
     @Published var errorMessage : String?
     
     let onLoginSucceed: (() -> ())
     
-    init(_ callback: @escaping () -> ()) {
+    init(_ callback: @escaping () -> (), repository: AuthenticationRepository = AuthenticationRepository()) {
         self.onLoginSucceed = callback
+        self.repository = repository
     }
     
+    @MainActor
     // fonction pour configurer le message d'erreur et l'afficher
     func setErrorMessage(_ message: String) {
         errorMessage = message
-        showError = true
     }
     
+    @MainActor
     func hideErrorMessage() {
         errorMessage = nil
-        showError = false
     }
-    
-    func login(usermail: String, password: String) async {
+            
+    func getTokenForUser(username: Email, password: String) async -> UUID? {
         do {
-            // Essayer de se connecter au serveur
-            guard let connect = try await repository.tryGet() else {
-                setErrorMessage("Erreur de connexion")
-                return
-            }
-            print(connect)
-            
-            // Vérifier le format de l'email
-            guard let username = Email.from(usermail) else {
-                setErrorMessage("Le format de l'email n'est pas valide")
-                return
-            }
-            
-            // Créer un utilisateur
-            user = User(userEmail: username, userPassword: password, transactions: [])
-            guard let user = user else {
-                setErrorMessage("Erreur à la création de l'utilisateur")
-                return
-            }
-            // Récuperation du token du user et ajout dans celui ci si il est valide
-            guard let token = try await repository.getTokenFrom(user) else {
-                setErrorMessage("Mauvaise adresse mail / mot de passe")
-                return
-            }
-            user.token = token
-            // Login réussi
-            print("Login with \(user.userEmail.emailAdress) and \(user.userPassword) avec comme token \(String(describing: user.token))")
-            onLoginSucceed()
+            let token = try await repository.getTokenFrom(username: username, password: password)
+            return token
         } catch {
-            // Gestion des erreurs
-            setErrorMessage("Une erreur s'est produite : \(error.localizedDescription)")
+            return nil
         }
     }
-
+    
+    @MainActor
+    func login(usermail: String, password: String) async {
+        // Vérifier la connexion au serveur
+        guard await repository.tryGet() else {
+            setErrorMessage("Erreur de connexion au serveur")
+            return
+        }
+        
+        // Vérifier le format de l'email
+        guard let username = Email.from(usermail) else {
+            setErrorMessage("Le format de l'email n'est pas valide")
+            return
+        }
+        
+        // Récupérer le token
+        guard let token = await getTokenForUser(username: username, password: password) else {
+            setErrorMessage("Mauvaise adresse mail / mot de passe")
+            return
+        }
+        
+        // Créer un utilisateur
+        let user = User(userEmail: username, userPassword: password, transactions: [], token: token)
+        
+        // Login réussi
+        self.user = user
+        print("Login avec \(self.user!.userEmail.emailAdress) et token \(String(describing: user.token))")
+        onLoginSucceed()
+    }
 }
