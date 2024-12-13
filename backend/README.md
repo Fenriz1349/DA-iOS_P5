@@ -62,7 +62,7 @@ Description: Permet de récuperer le detail du compte courant
 Header:
   - `token`: `String` (`UUID`)
   
-> Le token a fournit en header ici est le token obtenu dans l'appel a la route `POST /auth`
+> Le token a fournir en header ici est le token obtenu dans l'appel a la route `POST /auth`
 
 Body Response:
   - `currentBalance`: `Decimal`

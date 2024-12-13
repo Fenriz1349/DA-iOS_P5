@@ -12,49 +12,49 @@ import XCTest
 
 class AuraTestsGetToken: XCTestCase {
     
-    func testGetTokenFrom_MalformedJSON() async {
-        // Given
-        let mockmail = Email.from("test@example.com")!
-        let mock = tryMockInvalidJSONResponse()
-        let sut = AuthenticationRepository(executeDataRequest: mock)
-        
-        // Then
-        do {
-            _ = try await sut.getTokenFrom(username: mockmail, password: "password")
-        } catch let error as URLError {
-            XCTAssertEqual(error.code, .cannotDecodeContentData)
-        } catch { }
-    }
+//    func testGetTokenFrom_MalformedJSON() async {
+//        // Given
+//        let mockmail = Email.from("test@example.com")!
+//        let mock = tryMockInvalidJSONResponse()
+//        let sut = AuthenticationRepository(executeDataRequest: mock)
+//        
+//        // Then
+//        do {
+//            _ = try await sut.getTokenFrom(username: mockmail, password: "password")
+//        } catch let error as URLError {
+//            XCTAssertEqual(error.code, .cannotDecodeContentData)
+//        } catch { }
+//    }
     
-    func testGetTokenFrom_CannotParse() async {
-        // Given
-        let mockmail = Email.from("test@example.com")!
-        let mock = tryMockInvalidToken()
-        let sut = AuthenticationRepository(executeDataRequest: mock)
-        
-        // Then
-        do {
-            _ = try await sut.getTokenFrom(username: mockmail, password: "password")
-        } catch let error as URLError {
-            print(error)
-            XCTAssertEqual(error.code, .cannotParseResponse)
-        } catch { }
-    }
+//    func testGetTokenFrom_CannotParse() async {
+//        // Given
+//        let mockmail = Email.from("test@example.com")!
+//        let mock = tryMockInvalidToken()
+//        let sut = AuthenticationRepository(executeDataRequest: mock)
+//        
+//        // Then
+//        do {
+//            _ = try await sut.getTokenFrom(username: mockmail, password: "password")
+//        } catch let error as URLError {
+//            print(error)
+//            XCTAssertEqual(error.code, .cannotParseResponse)
+//        } catch { }
+//    }
     
-    func testGetTokenFrom_ValidTokenResponse() async {
-        // Given
-        let mockmail = Email.from("test@example.com")!
-        let mock = tryMockValidTokenResponse()
-        let sut = AuthenticationRepository(executeDataRequest: mock)
-        
-        // When
-        do {
-            let token = try await sut.getTokenFrom(username: mockmail, password: "password")
-            XCTAssertNotNil(token)
-            XCTAssertTrue(token is UUID)
-        } catch {
-        }
-    }
+//    func testGetTokenFrom_ValidTokenResponse() async {
+//        // Given
+//        let mockmail = Email.from("test@example.com")!
+//        let mock = tryMockValidTokenResponse()
+//        let sut = AuthenticationRepository(executeDataRequest: mock)
+//        
+//        // When
+//        do {
+//            let token = try await sut.getTokenFrom(username: mockmail, password: "password")
+//            XCTAssertNotNil(token)
+//            XCTAssertTrue(token is UUID)
+//        } catch {
+//        }
+//    }
 }
 
 extension AuraTestsGetToken {

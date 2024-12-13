@@ -23,43 +23,70 @@ class AuraTestsTryGet: XCTestCase {
 //        }
 //    }
     
-    func testTryGetURL_Sucess() async {
-        // Given
-        let mock = tryMockSuccessWithExpectedData()
-        let sut = AuthenticationRepository(executeDataRequest: mock)
+    func testTryGet_Success() async {
+        let url = URL(string: "https://example.com")!
+        let mockData = Data("It works!".utf8)
+        let mockResponse = HTTPURLResponse(
+            url: url,
+            statusCode: 200,
+            httpVersion: nil,
+            headerFields: nil
+        )!
         
-        do {
-            let result = try await sut.tryGet()
-            XCTAssertTrue(result)
-        } catch {
-        }
+        MockURLProtocol.mockResponseData = mockData
+        MockURLProtocol.mockResponse = mockResponse
+        MockURLProtocol.mockError = nil
+        Connector.session = MockURLSession.shared
+        
+        let result = await AuthenticationRepository().tryGet(url: url)
+        XCTAssertTrue(result)
     }
+    
+    func testTryGet_NetworkError() async {
+        let url = URL(string: "https://example.com")!
+        
+        MockURLProtocol.mockError = URLError(.notConnectedToInternet)
+        Connector.session = MockURLSession.shared
+        
+        let result = await AuthenticationRepository().tryGet(url: url)
+        XCTAssertFalse(result)
+    }
+    
+    func testTryGet_InvalidData() async {
+        let url = URL(string: "https://example.com")!
+        let mockData = Data([0xFF, 0xD8]) // Données non décodables en UTF-8
+        let mockResponse = HTTPURLResponse(
+            url: url,
+            statusCode: 200,
+            httpVersion: nil,
+            headerFields: nil
+        )!
+        
+        MockURLProtocol.mockResponseData = mockData
+        MockURLProtocol.mockResponse = mockResponse
+        Connector.session = MockURLSession.shared
+        
+        let result = await AuthenticationRepository().tryGet(url: url)
+        XCTAssertFalse(result)
+    }
+    
+    func testTryGet_IncorrectContent() async {
+        let url = URL(string: "https://example.com")!
+        let mockData = Data("Wrong content".utf8)
+        let mockResponse = HTTPURLResponse(
+            url: url,
+            statusCode: 200,
+            httpVersion: nil,
+            headerFields: nil
+        )!
+        
+        MockURLProtocol.mockResponseData = mockData
+        MockURLProtocol.mockResponse = mockResponse
+        Connector.session = MockURLSession.shared
+        
+        let result = await AuthenticationRepository().tryGet(url: url)
+        XCTAssertFalse(result)
+    }
+    
 }
 
-extension AuraTestsTryGet {
-    
-    // Mock pour une réponse correcte mais avec un contenu qui n'est pas "It Works!"
-    func tryMockIncorrectStringData() -> (URLRequest) async throws -> (Data, URLResponse) {
-        return { _ in
-            let response = HTTPURLResponse(url: URL(string: "http://example.com")!,
-                                           statusCode: 200,
-                                           httpVersion: nil,
-                                           headerFields: nil)!
-            // Contenu différent de "It Works!"
-            return (Data("Wrong Message".utf8), response)
-        }
-    }
-    
-    
-    // Mock pour une bonne connexion avec une réponse attendue
-    func tryMockSuccessWithExpectedData() -> (URLRequest) async throws -> (Data, URLResponse) {
-        return { _ in
-            let response = HTTPURLResponse(url: URL(string: "http://example.com")!,
-                                           statusCode: 200,
-                                           httpVersion: nil,
-                                           headerFields: nil)!
-            // Réponse correcte avec "It Works!"
-            return (Data("It works!".utf8), response)
-        }
-    }
-}

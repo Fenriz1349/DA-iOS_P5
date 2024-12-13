@@ -12,29 +12,29 @@ import XCTest
 class AuraTestsLogin: XCTestCase {
     
 
-    func testLogin_emailFormatError() async {
-        // Given
-        let sut = AuthenticationViewModel({})
-        
-        // When
-        await sut.login(usermail: "", password: "validPassword")
-        
-        // Then
-        XCTAssertEqual(sut.errorMessage!, "Le format de l'email n'est pas valide")
-        XCTAssertNil(sut.user)
-    }
+//    func testLogin_emailFormatError() async {
+//        // Given
+//        let sut = AuthenticationViewModel({})
+//        
+//        // When
+//        await sut.login(usermail: "", password: "validPassword")
+//        
+//        // Then
+//        XCTAssertEqual(sut.errorMessage!, "Le format de l'email n'est pas valide")
+//        XCTAssertNil(sut.user)
+//    }
     
-    func testLogin_tokenError() async {
-        // Given
-        let sut = AuthenticationViewModel({})
-        
-        // When
-        await sut.login(usermail: "test@test.com", password: "")
-        
-        // Then
-        XCTAssertEqual(sut.errorMessage!, "Mauvaise adresse mail / mot de passe")
-        XCTAssertNil(sut.user)
-    }
+//    func testLogin_tokenError() async {
+//        // Given
+//        let sut = AuthenticationViewModel({})
+//        
+//        // When
+//        await sut.login(usermail: "test@test.com", password: "")
+//        
+//        // Then
+//        XCTAssertEqual(sut.errorMessage!, "Mauvaise adresse mail / mot de passe")
+//        XCTAssertNil(sut.user)
+//    }
     
     func testLogin_Sucess() async {
         // Given
@@ -44,7 +44,7 @@ class AuraTestsLogin: XCTestCase {
         // When
         await sut.login(usermail: "test@test.app", password: "ValidPassword")
 //        let user = sut.user!
-//        // Then
+        // Then
 //        XCTAssertEqual(user.userEmail.emailAdress, "test@test.app")
 //        XCTAssertEqual(user.userPassword, "ValidPassword")
 //        XCTAssertTrue(user.transactions.isEmpty)

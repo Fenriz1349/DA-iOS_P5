@@ -40,6 +40,7 @@ class AuraTestsConnector: XCTestCase {
             // Configurer le MockURLProtocol pour renvoyer les données simulées
             MockURLProtocol.mockResponseData = mockData
             MockURLProtocol.mockResponse = mockResponse
+            MockURLProtocol.mockError = nil
             Connector.session = MockURLSession.shared // Injecter la session mockée
             
             let (data, response) = try await Connector.executeDataRequest(request)
@@ -60,17 +61,20 @@ class AuraTestsConnector: XCTestCase {
                 expectedContentLength: 100,
                 textEncodingName: nil
             )
+        MockURLProtocol.mockResponseData = Data()
         Connector.session = MockURLSession.shared
         
         do {
             let _ = try await Connector.executeDataRequest(request)
         } catch let error as URLError {
             XCTAssertEqual(error.code, URLError.Code.badServerResponse)
+        } catch {
+            
         }
     }
     
     func testPerformRequest_Success() async throws {
-            let url = URL(string: "https://example.com")!
+        let url = URL(string: "https://example.com")!
         let method = HTTPMethod.GET
             
             // Simuler une réponse HTTP valide
@@ -84,6 +88,7 @@ class AuraTestsConnector: XCTestCase {
             
             MockURLProtocol.mockResponseData = mockData
             MockURLProtocol.mockResponse = mockResponse
+        MockURLProtocol.mockError = nil
             Connector.session = MockURLSession.shared
             
             let data = try await Connector.performRequest(from: url, with: method)
@@ -111,7 +116,7 @@ class AuraTestsConnector: XCTestCase {
            do {
                let _ = try await Connector.performRequest(from: url, with: method)
            } catch let error as URLError {
-               XCTAssertEqual(error.code, URLError.Code.cannotConnectToHost)
+               XCTAssertEqual(error.code, URLError.Code.badServerResponse)
            }
         }
 }

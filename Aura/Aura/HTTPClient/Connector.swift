@@ -33,7 +33,7 @@ struct Connector {
         
         // Vérifie le code de réponse HTTP
         guard httpResponse.statusCode == 200 else {
-            throw URLError(.cannotConnectToHost)
+            throw URLError(.badServerResponse)
         }
         return data
     }
