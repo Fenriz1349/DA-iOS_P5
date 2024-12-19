@@ -11,12 +11,29 @@ import XCTest
 
 class AuraTestsLogin: XCTestCase {
     
+    func testLogin_Success() async {
+        // Given
+        let mockRepository = MockAuthenticationRepository()
+        mockRepository.tryGetResult = true
+        mockRepository.getTokenResult = UUID(uuidString: "123E4567-E89B-12D3-A456-426614174000")
+                
+        var isSucess = false
+        let sut = AuthenticationViewModel(onLoginSucceed: {isSucess = true}, repository: mockRepository)
+        
+        // When
+        await sut.login(usermail: "test@aura.app", password: "test123")
+        
+        // Then
+        XCTAssertNil(sut.errorMessage)
+        XCTAssertEqual(sut.user?.userEmail.emailAdress, "test@aura.app")
+        XCTAssertTrue(isSucess)
+    }
+    
     func testLogin_tryGets_returnFalse() async {
         // Given
-        let mockClient = MockHTTPClient()
-        mockClient.mockData = Data("Wrong Data".utf8)
-        let repository = AuthenticationRepository(client: mockClient)
-        let sut = AuthenticationViewModel(onLoginSucceed: {}, repository: repository)
+        let mockRepository = MockAuthenticationRepository()
+        mockRepository.tryGetResult = false
+        let sut = AuthenticationViewModel(onLoginSucceed: {}, repository: mockRepository)
         
         // When
         await sut.login(usermail: "", password: "")
@@ -27,7 +44,9 @@ class AuraTestsLogin: XCTestCase {
 
     func testLogin_emailFormatError() async {
         // Given
-        let sut = AuthenticationViewModel(onLoginSucceed: {})
+        let mockRepository = MockAuthenticationRepository()
+        mockRepository.tryGetResult = true
+        let sut = AuthenticationViewModel(onLoginSucceed: {}, repository: mockRepository)
         
         // When
         await sut.login(usermail: "", password: "validPassword")
@@ -37,16 +56,18 @@ class AuraTestsLogin: XCTestCase {
         XCTAssertNil(sut.user)
     }
     
-//    func testLogin_tokenError() async {
-//        // Given
-//        let sut = AuthenticationViewModel({})
-//        
-//        // When
-//        await sut.login(usermail: "test@test.com", password: "")
-//        
-//        // Then
-//        XCTAssertEqual(sut.errorMessage!, "Mauvaise adresse mail / mot de passe")
-//        XCTAssertNil(sut.user)
-//    }
-    
+    func testLogin_tokenError() async {
+        // Given
+        let mockRepository = MockAuthenticationRepository()
+        mockRepository.tryGetResult = true
+        mockRepository.getTokenResult = nil
+        let sut = AuthenticationViewModel(onLoginSucceed: {}, repository: mockRepository)
+        
+        // When
+        await sut.login(usermail: "test@test.com", password: "wrongPassword")
+        
+        // Then
+        XCTAssertEqual(sut.errorMessage, "Mauvaise adresse mail / mot de passe")
+        XCTAssertNil(sut.user)
+    }
 }

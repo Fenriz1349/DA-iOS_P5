@@ -49,6 +49,7 @@ class MockURLSession {
 
 // Permet de 
 class MockHTTPClient: HTTPClient {
+    
     var mockData: Data?
     var mockError: Error?
 
@@ -57,5 +58,24 @@ class MockHTTPClient: HTTPClient {
             throw error
         }
         return mockData ?? Data()
+    }
+    func performAuthRequest(username: String, password: String, url: URL) async throws -> Data {
+        if let error = mockError {
+            throw error
+        }
+        return mockData ?? Data()
+    }
+}
+
+class MockAuthenticationRepository: AuthenticationRepository {
+    var tryGetResult: Bool = true
+    var getTokenResult: UUID? = nil
+
+    override func tryGet(url: URL = AppConfig().baseUrl) async -> Bool {
+        return tryGetResult
+    }
+
+    override func getTokenFrom(username: Email, password: String) async -> UUID? {
+        return getTokenResult
     }
 }

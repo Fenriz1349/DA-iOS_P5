@@ -32,16 +32,6 @@ class AuthenticationViewModel: ObservableObject {
         errorMessage = nil
     }
             
-//    func getTokenForUser(username: Email, password: String) async -> UUID? {
-//        do {
-//            let token = try await repository.getTokenFrom(username: username, password: password)
-//            print(token)
-//            return token
-//        } catch {
-//            return nil
-//        }
-//    }
-    
     @MainActor
     func login(usermail: String, password: String) async {
         // Vérifier la connexion au serveur
@@ -57,17 +47,17 @@ class AuthenticationViewModel: ObservableObject {
         }
 
         // Récupérer le token
-//        guard let token = await getTokenForUser(username: username, password: password) else {
-//            setErrorMessage("Mauvaise adresse mail / mot de passe")
-//            return
-//        }
+        guard let token = await repository.getTokenFrom(username: username, password: password) else {
+            setErrorMessage("Mauvaise adresse mail / mot de passe")
+            return
+        }
         
         // Créer un utilisateur
-//        let user = User(userEmail: username, userPassword: password, transactions: [], token: token)
+        let user = User(userEmail: username, transactions: [], token: token)
         
         // Login réussi
-//        self.user = user
-//        print("Login avec \(self.user!.userEmail.emailAdress) et token \(String(describing: user.token))")
+        self.user = user
+        print("Login avec \(self.user!.userEmail.emailAdress) et token \(String(describing: user.token))")
         onLoginSucceed()
     }
 }
