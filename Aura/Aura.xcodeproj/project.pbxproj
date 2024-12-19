@@ -113,7 +113,7 @@
 		53D4187A2AC7099A0070ADB1 /* Aura */ = {
 			isa = PBXGroup;
 			children = (
-				681A94872D1426F100C765FF /* Model */,
+				681A94E02D142A9B00C765FF /* Models */,
 				68C99C932CF9D030002F75A0 /* HTTPClient */,
 				68C99C8E2CF9B759002F75A0 /* ExtractedVews */,
 				53D418962AC70FC50070ADB1 /* Utils */,
@@ -167,7 +167,7 @@
 			path = Utils;
 			sourceTree = "<group>";
 		};
-		681A94872D1426F100C765FF /* Model */ = {
+		681A94E02D142A9B00C765FF /* Models */ = {
 			isa = PBXGroup;
 			children = (
 				68C99C822CF877EF002F75A0 /* Email.swift */,
@@ -175,7 +175,7 @@
 				68C99C8A2CF8FB8E002F75A0 /* Transaction.swift */,
 				68B606442D019FD5007D4EC6 /* AppConfig.swift */,
 			);
-			path = Model;
+			path = Models;
 			sourceTree = "<group>";
 		};
 		68C99C8E2CF9B759002F75A0 /* ExtractedVews */ = {
