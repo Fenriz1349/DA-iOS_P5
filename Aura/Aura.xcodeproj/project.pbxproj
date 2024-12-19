@@ -113,10 +113,10 @@
 		53D4187A2AC7099A0070ADB1 /* Aura */ = {
 			isa = PBXGroup;
 			children = (
+				681A94872D1426F100C765FF /* Model */,
 				68C99C932CF9D030002F75A0 /* HTTPClient */,
 				68C99C8E2CF9B759002F75A0 /* ExtractedVews */,
 				53D418962AC70FC50070ADB1 /* Utils */,
-				53D4188B2AC709B80070ADB1 /* Models */,
 				53D4188A2AC709B30070ADB1 /* ViewModels */,
 				53D418892AC709AD0070ADB1 /* Views */,
 				53D4187B2AC7099A0070ADB1 /* AuraApp.swift */,
@@ -157,17 +157,6 @@
 			path = ViewModels;
 			sourceTree = "<group>";
 		};
-		53D4188B2AC709B80070ADB1 /* Models */ = {
-			isa = PBXGroup;
-			children = (
-				68C99C822CF877EF002F75A0 /* Email.swift */,
-				68C99C882CF8FAA4002F75A0 /* User.swift */,
-				68C99C8A2CF8FB8E002F75A0 /* Transaction.swift */,
-				68B606442D019FD5007D4EC6 /* AppConfig.swift */,
-			);
-			path = Models;
-			sourceTree = "<group>";
-		};
 		53D418962AC70FC50070ADB1 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
@@ -176,6 +165,17 @@
 				68C99C8C2CF9AF2A002F75A0 /* Double+Ext.swift */,
 			);
 			path = Utils;
+			sourceTree = "<group>";
+		};
+		681A94872D1426F100C765FF /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				68C99C822CF877EF002F75A0 /* Email.swift */,
+				68C99C882CF8FAA4002F75A0 /* User.swift */,
+				68C99C8A2CF8FB8E002F75A0 /* Transaction.swift */,
+				68B606442D019FD5007D4EC6 /* AppConfig.swift */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 		68C99C8E2CF9B759002F75A0 /* ExtractedVews */ = {
