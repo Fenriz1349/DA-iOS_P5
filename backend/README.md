@@ -24,7 +24,7 @@ La console dans Xcode devrait faire apparaitre le message suivant :
 
 ### `GET /`
 
-Description: Il s'agit d'une route pour verifier si l'API est lancé. DOit retourner "It works" si le serveur est correctement lancé
+Description: Il s'agit d'une route pour verifier si l'API est lancé. Doit retourner "It works" si le serveur est correctement lancé
 
 ### `POST /auth`
 
@@ -62,7 +62,7 @@ Description: Permet de récuperer le detail du compte courant
 Header:
   - `token`: `String` (`UUID`)
   
-> Le token a fournit en header ici est le token obtenu dans l'appel a la route `POST /auth`
+> Le token a fournir en header ici est le token obtenu dans l'appel a la route `POST /auth`
 
 Body Response:
   - `currentBalance`: `Decimal`

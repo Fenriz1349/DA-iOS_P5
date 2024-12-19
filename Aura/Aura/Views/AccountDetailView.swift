@@ -16,7 +16,7 @@ struct AccountDetailView: View {
             VStack(spacing: 10) {
                 Text("Your Balance")
                     .font(.headline)
-                Text(viewModel.totalAmount)
+                Text(viewModel.totalAmount.toEuroFormat())
                     .font(.system(size: 60, weight: .bold))
                     .foregroundColor(Color(hex: "#94A684")) // Using the green color you provided
                 Image(systemName: "eurosign.circle.fill")
@@ -34,13 +34,13 @@ struct AccountDetailView: View {
                     .padding([.horizontal])
                 ForEach(viewModel.recentTransactions, id: \.description) { transaction in
                     HStack {
-                        Image(systemName: transaction.amount.contains("+") ? "arrow.up.right.circle.fill" : "arrow.down.left.circle.fill")
-                            .foregroundColor(transaction.amount.contains("+") ? .green : .red)
+                        Image(systemName: transaction.amount >= 0.0 ? "arrow.up.right.circle.fill" : "arrow.down.left.circle.fill")
+                            .foregroundColor(transaction.amount >= 0.0 ? .green : .red)
                         Text(transaction.description)
                         Spacer()
-                        Text(transaction.amount)
+                        Text(transaction.amount.toEuroFormat())
                             .fontWeight(.bold)
-                            .foregroundColor(transaction.amount.contains("+") ? .green : .red)
+                            .foregroundColor(transaction.amount >= 0.0 ? .green : .red)
                     }
                     .padding()
                     .background(Color.gray.opacity(0.1))

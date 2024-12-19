@@ -1,2 +1,6 @@
-Aura/Aura.xcodeproj/xcuserdata
-Aura/Aura.xcodeproj/project.xcworkspace/xcuserdata/juliencotte.xcuserdatad
+*.xcuserstate
+*.log
+.DS_Store
+*.xcuserstate
+Aura/.DS_Store
+Aura/Aura.xcodeproj/xcuserdata/juliencotte.xcuserdatad/xcdebugger
