@@ -45,19 +45,25 @@ class AuthenticationViewModel: ObservableObject {
             setErrorMessage("Le format de l'email n'est pas valide")
             return
         }
-
+        
         // Récupérer le token
         guard let token = await repository.getTokenFrom(username: username, password: password) else {
             setErrorMessage("Mauvaise adresse mail / mot de passe")
             return
         }
         
+        // Sauvegarder le token dans le Keychain
+        guard KeychainService.save(key: "authToken", data: Data(token.uuidString.utf8)) else {
+            setErrorMessage("Échec de la sauvegarde du token")
+            return
+        }
+        
         // Créer un utilisateur
-        let user = User(userEmail: username, transactions: [], token: token)
+        let user = User(userEmail: username, transactions: [])
         
         // Login réussi
         self.user = user
-        print("Login avec \(self.user!.userEmail.emailAdress) et token \(String(describing: user.token))")
+        print("L'utilisateur \(self.user!.userEmail.emailAdress) vient nous dire Ah que Coucou!")
         onLoginSucceed()
     }
 }

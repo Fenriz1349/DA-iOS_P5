@@ -12,6 +12,7 @@ class AppViewModel: ObservableObject {
     
     init() {
         isLogged = false
+        KeychainService.delete(key: "authToken")
     }
     
     var authenticationViewModel: AuthenticationViewModel {
