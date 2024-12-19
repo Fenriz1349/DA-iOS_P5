@@ -6,7 +6,8 @@
 //
 
 import Foundation
-
+@testable import Aura
+// MockURLProtocol intercepte les requêtes effetué et permet de simuler des réponses
 class MockURLProtocol: URLProtocol {
     static var mockResponseData: Data?
     static var mockResponse: URLResponse?
@@ -37,10 +38,24 @@ class MockURLProtocol: URLProtocol {
     }
 }
 
+// Permet de rediriger les requetes HTTP vers MockURLProtocol
 class MockURLSession {
     static var shared: URLSession {
         let config = URLSessionConfiguration.ephemeral
         config.protocolClasses = [MockURLProtocol.self]
         return URLSession(configuration: config)
+    }
+}
+
+// Permet de 
+class MockHTTPClient: HTTPClient {
+    var mockData: Data?
+    var mockError: Error?
+
+    func performRequest(from url: URL, with method: HTTPMethod) async throws -> Data {
+        if let error = mockError {
+            throw error
+        }
+        return mockData ?? Data()
     }
 }
