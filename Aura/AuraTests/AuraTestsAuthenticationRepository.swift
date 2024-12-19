@@ -38,8 +38,6 @@ class AuraTestsAuthenticationRepository: XCTestCase {
         XCTAssertFalse(result)
     }
     
- 
-    
     func testTryGet_NetworkError() async {
         // Given
         let mockClient = MockHTTPClient()
@@ -66,5 +64,62 @@ class AuraTestsAuthenticationRepository: XCTestCase {
         let result = await sut.tryGet(url: url)
         XCTAssertFalse(result)
     }
+    
+    func testGetTokenFrom_Success_ReturnsToken() async {
+        // Given
+        let mockClient = MockHTTPClient()
+        let email = Email(local: Local(name: "test"), domain: Domain(name: "test", domExtension: "com"))
+        let password = "password"
+        let validUUIDString = "123E4567-E89B-12D3-A456-426614174000"
+        let json = """
+            {
+                "token": "\(validUUIDString)"
+            }
+            """
+        mockClient.mockData = Data(json.utf8)
+        let repository = AuthenticationRepository(client: mockClient)
+        
+        
+        // When
+        let result = await repository.getTokenFrom(username: email, password: password)
+        
+        // Then
+        XCTAssertEqual(result?.uuidString, validUUIDString)
+    }
+    
+    func testGetTokenFrom_JSONWithoutTokenKey_ReturnsNil() async {
+        // Given
+        let email = Email(local: Local(name: "test"), domain: Domain(name: "test", domExtension: "com"))
+        let password = "password"
+        let mockClient = MockHTTPClient()
+        let json = """
+            {
+                "key": "value"
+            }
+            """
+        mockClient.mockData = Data(json.utf8)
+        let repository = AuthenticationRepository(client: mockClient)
+        
+        // When
+        let result = await repository.getTokenFrom(username: email, password: password)
+        
+        // Then
+        XCTAssertNil(result)
+    }
+    
+    func testGetTokenFrom_RequestFails_ReturnsNil() async {
+          // Given
+        let email = Email(local: Local(name: "test"), domain: Domain(name: "test", domExtension: "com"))
+        let password = "password"
+          let mockClient = MockHTTPClient()
+          mockClient.mockError = URLError(.notConnectedToInternet)
+          let repository = AuthenticationRepository(client: mockClient)
+          
+          // When
+        let result = await repository.getTokenFrom(username: email, password: password)
+          
+          // Then
+          XCTAssertNil(result)
+      }
 }
 
