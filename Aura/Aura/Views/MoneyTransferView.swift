@@ -75,7 +75,7 @@ struct MoneyTransferView: View {
             }
             .padding()
             .onTapGesture {
-                        self.endEditing(true)  // This will dismiss the keyboard when tapping outside
+                        self.endEditing(true)  
                     }
         }
 }
