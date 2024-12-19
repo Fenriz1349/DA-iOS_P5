@@ -12,11 +12,12 @@ import XCTest
 class AuraTestsConnector: XCTestCase {
     func testCreateURLRequest() throws {
         // Given
+        let sut = Connector()
         let url = URL(string: "https://example.com")!
         let method = HTTPMethod.GET
         
         // When
-        let request = try Connector.createURLRequest(from: url, with: method)
+        let request = try sut.createURLRequest(from: url, with: method)
         
         // Then
         XCTAssertEqual(request.url, url)
@@ -24,36 +25,44 @@ class AuraTestsConnector: XCTestCase {
     }
     
     func testExecuteDataRequest_Success() async throws {
-            let url = URL(string: "https://example.com")!
-            let method = HTTPMethod.GET
-            let request = try Connector.createURLRequest(from: url, with: method)
-            
-            // Simuler une réponse HTTP valide
-            let mockData = Data("mock data".utf8)
-            let mockResponse = HTTPURLResponse(
-                url: url,
-                statusCode: 200,
-                httpVersion: nil,
-                headerFields: nil
-            )!
-            
-            // Configurer le MockURLProtocol pour renvoyer les données simulées
-            MockURLProtocol.mockResponseData = mockData
-            MockURLProtocol.mockResponse = mockResponse
-            MockURLProtocol.mockError = nil
-            Connector.session = MockURLSession.shared // Injecter la session mockée
-            
-            let (data, response) = try await Connector.executeDataRequest(request)
-            
-            XCTAssertEqual(data, mockData)
-            XCTAssertEqual(response.statusCode, 200)
-        }
-    
-    func testExecuteDataRequest_HTTPURLResponseError() async throws {
+        // Given
+        let mockSession = MockURLSession.shared
+        let sut = Connector( session: mockSession)
         let url = URL(string: "https://example.com")!
         let method = HTTPMethod.GET
-        let request = try Connector.createURLRequest(from: url, with: method)
+        let request = try sut.createURLRequest(from: url, with: method)
         
+        // When
+        // Simuler une réponse HTTP valide
+        let mockData = Data("mock data".utf8)
+        let mockResponse = HTTPURLResponse(
+            url: url,
+            statusCode: 200,
+            httpVersion: nil,
+            headerFields: nil
+        )!
+        
+        // Configurer le MockURLProtocol pour renvoyer les données simulées
+        MockURLProtocol.mockResponseData = mockData
+        MockURLProtocol.mockResponse = mockResponse
+        MockURLProtocol.mockError = nil
+        
+        let (data, response) = try await sut.executeDataRequest(request)
+        
+        // Then
+        XCTAssertEqual(data, mockData)
+        XCTAssertEqual(response.statusCode, 200)
+    }
+    
+    func testExecuteDataRequest_HTTPURLResponseError() async throws {
+        // Given
+        let mockSession = MockURLSession.shared
+        let sut = Connector( session: mockSession)
+        let url = URL(string: "https://example.com")!
+        let method = HTTPMethod.GET
+        let request = try sut.createURLRequest(from: url, with: method)
+        
+        // When
         // Simuler une URLResponse au lieu de HTTPURLResponse
         MockURLProtocol.mockResponse = URLResponse(
                 url: url,
@@ -62,61 +71,67 @@ class AuraTestsConnector: XCTestCase {
                 textEncodingName: nil
             )
         MockURLProtocol.mockResponseData = Data()
-        Connector.session = MockURLSession.shared
         
+        // Then
         do {
-            let _ = try await Connector.executeDataRequest(request)
+            let _ = try await sut.executeDataRequest(request)
         } catch let error as URLError {
             XCTAssertEqual(error.code, URLError.Code.badServerResponse)
-        } catch {
-            
         }
     }
     
     func testPerformRequest_Success() async throws {
+        // Given
+        let mockSession = MockURLSession.shared
+        let sut = Connector( session: mockSession)
         let url = URL(string: "https://example.com")!
         let method = HTTPMethod.GET
-            
-            // Simuler une réponse HTTP valide
-            let mockData = Data("mock data".utf8)
-            let mockResponse = HTTPURLResponse(
-                url: url,
-                statusCode: 200,
-                httpVersion: nil,
-                headerFields: nil
-            )!
-            
-            MockURLProtocol.mockResponseData = mockData
-            MockURLProtocol.mockResponse = mockResponse
+        
+        // When
+        // Simuler une réponse HTTP valide
+        let mockData = Data("mock data".utf8)
+        let mockResponse = HTTPURLResponse(
+            url: url,
+            statusCode: 200,
+            httpVersion: nil,
+            headerFields: nil
+        )!
+        
+        MockURLProtocol.mockResponseData = mockData
+        MockURLProtocol.mockResponse = mockResponse
         MockURLProtocol.mockError = nil
-            Connector.session = MockURLSession.shared
-            
-            let data = try await Connector.performRequest(from: url, with: method)
-            
+        
+        // Then
+        let data = try await sut.performRequest(from: url, with: method)
+        
         XCTAssertEqual(data, mockData)
-        }
+    }
    
     func testPerformRequest_Failure_HTTPStatusCode() async throws {
-           let url = URL(string: "https://example.com")!
-           let method = HTTPMethod.GET
-           
-           // Simuler une réponse HTTP avec un code d'erreur (500)
-           let mockData = Data("mock data".utf8)
-           let mockResponse = HTTPURLResponse(
-               url: url,
-               statusCode: 500,
-               httpVersion: nil,
-               headerFields: nil
-           )!
-           
-           MockURLProtocol.mockResponseData = mockData
-           MockURLProtocol.mockResponse = mockResponse
-           Connector.session = MockURLSession.shared
-           
-           do {
-               let _ = try await Connector.performRequest(from: url, with: method)
-           } catch let error as URLError {
-               XCTAssertEqual(error.code, URLError.Code.badServerResponse)
-           }
+        // Given
+        let mockSession = MockURLSession.shared
+        let sut = Connector( session: mockSession)
+        let url = URL(string: "https://example.com")!
+        let method = HTTPMethod.GET
+        
+        // When
+        // Simuler une réponse HTTP avec un code d'erreur (500)
+        let mockData = Data("mock data".utf8)
+        let mockResponse = HTTPURLResponse(
+            url: url,
+            statusCode: 500,
+            httpVersion: nil,
+            headerFields: nil
+        )!
+        
+        MockURLProtocol.mockResponseData = mockData
+        MockURLProtocol.mockResponse = mockResponse
+        
+        // Then
+        do {
+            let _ = try await sut.performRequest(from: url, with: method)
+        } catch let error as URLError {
+            XCTAssertEqual(error.code, URLError.Code.badServerResponse)
         }
+    }
 }

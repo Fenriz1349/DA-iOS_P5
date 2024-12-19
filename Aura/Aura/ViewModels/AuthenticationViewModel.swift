@@ -7,15 +7,17 @@
 
 import SwiftUI
 
+// Le viewModel sert à fournir les éléments aux vues, et à orchestrer les appels au repository
+// Il gère less interactions avec l'utilisateur
 class AuthenticationViewModel: ObservableObject {
     let repository: AuthenticationRepository
     @Published var user: User?
     @Published var errorMessage : String?
     
-    let onLoginSucceed: (() -> ())
+    let onLoginSucceed: () -> Void
     
-    init(_ callback: @escaping () -> (), repository: AuthenticationRepository = AuthenticationRepository()) {
-        self.onLoginSucceed = callback
+    init(onLoginSucceed: @escaping () -> Void, repository: AuthenticationRepository = AuthenticationRepository()) {
+        self.onLoginSucceed = onLoginSucceed
         self.repository = repository
     }
     
@@ -30,14 +32,15 @@ class AuthenticationViewModel: ObservableObject {
         errorMessage = nil
     }
             
-    func getTokenForUser(username: Email, password: String) async -> UUID? {
-        do {
-            let token = try await repository.getTokenFrom(username: username, password: password)
-            return token
-        } catch {
-            return nil
-        }
-    }
+//    func getTokenForUser(username: Email, password: String) async -> UUID? {
+//        do {
+//            let token = try await repository.getTokenFrom(username: username, password: password)
+//            print(token)
+//            return token
+//        } catch {
+//            return nil
+//        }
+//    }
     
     @MainActor
     func login(usermail: String, password: String) async {
@@ -52,19 +55,19 @@ class AuthenticationViewModel: ObservableObject {
             setErrorMessage("Le format de l'email n'est pas valide")
             return
         }
-        
+
         // Récupérer le token
-        guard let token = await getTokenForUser(username: username, password: password) else {
-            setErrorMessage("Mauvaise adresse mail / mot de passe")
-            return
-        }
+//        guard let token = await getTokenForUser(username: username, password: password) else {
+//            setErrorMessage("Mauvaise adresse mail / mot de passe")
+//            return
+//        }
         
         // Créer un utilisateur
-        let user = User(userEmail: username, userPassword: password, transactions: [], token: token)
+//        let user = User(userEmail: username, userPassword: password, transactions: [], token: token)
         
         // Login réussi
-        self.user = user
-        print("Login avec \(self.user!.userEmail.emailAdress) et token \(String(describing: user.token))")
+//        self.user = user
+//        print("Login avec \(self.user!.userEmail.emailAdress) et token \(String(describing: user.token))")
         onLoginSucceed()
     }
 }

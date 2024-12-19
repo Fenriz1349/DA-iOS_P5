@@ -12,7 +12,7 @@ class User: Identifiable {
     var userEmail : Email
     var userPassword: String
     var transactions: [Transaction]
-    // ne pas stocker le token et utiliser un keychain service
+    // to do: ne pas stocker le token et utiliser un keychain service
     let token: UUID?
     
     var totalAmount: Double {

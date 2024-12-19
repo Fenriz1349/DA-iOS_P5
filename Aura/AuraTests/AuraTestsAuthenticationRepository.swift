@@ -8,85 +8,63 @@
 import XCTest
 @testable import Aura
 
-class AuraTestsTryGet: XCTestCase {
-    
-//    func testTryGetURL_Sucess_WrongString() async {
-//        // Given
-//        let mock = tryMockIncorrectStringData()
-//        let sut = AuthenticationRepository(executeDataRequest: mock)
-//        
-//        do {
-//            let result = try await sut.tryGet()
-//            XCTAssertFalse(result)
-//        } catch {
-//            XCTFail("Aucune erreur ne devrait être levée : \(error)")
-//        }
-//    }
+class AuraTestsAuthenticationRepository: XCTestCase {
     
     func testTryGet_Success() async {
+        // Given
+        // Création d'un client et simulation de sa réponse
+        let mockClient = MockHTTPClient()
+        mockClient.mockData = Data("It works!".utf8)
         let url = URL(string: "https://example.com")!
-        let mockData = Data("It works!".utf8)
-        let mockResponse = HTTPURLResponse(
-            url: url,
-            statusCode: 200,
-            httpVersion: nil,
-            headerFields: nil
-        )!
+        // Injection du client dans le repository
+        let sut = AuthenticationRepository(client: mockClient)
         
-        MockURLProtocol.mockResponseData = mockData
-        MockURLProtocol.mockResponse = mockResponse
-        MockURLProtocol.mockError = nil
-        Connector.session = MockURLSession.shared
-        
-        let result = await AuthenticationRepository().tryGet(url: url)
+        // When
+        let result = await sut.tryGet(url: url)
+        // Then
         XCTAssertTrue(result)
     }
     
-    func testTryGet_NetworkError() async {
+    func testTryGetURL_Sucess_WrongString() async {
+        // Given
+        let mockClient = MockHTTPClient()
+        mockClient.mockData = Data("Wrong Data".utf8)
         let url = URL(string: "https://example.com")!
+        let sut = AuthenticationRepository(client: mockClient)
         
-        MockURLProtocol.mockError = URLError(.notConnectedToInternet)
-        Connector.session = MockURLSession.shared
+        // When
+        let result = await sut.tryGet(url: url)
+        // Then
+        XCTAssertFalse(result)
+    }
+    
+ 
+    
+    func testTryGet_NetworkError() async {
+        // Given
+        let mockClient = MockHTTPClient()
+        let url = URL(string: "https://example.com")!
+        let sut = AuthenticationRepository(client: mockClient)
         
-        let result = await AuthenticationRepository().tryGet(url: url)
+        // When
+        mockClient.mockError = URLError(.notConnectedToInternet)
+        
+        let result = await sut.tryGet(url: url)
         XCTAssertFalse(result)
     }
     
     func testTryGet_InvalidData() async {
+        // Given
+        let mockClient = MockHTTPClient()
         let url = URL(string: "https://example.com")!
-        let mockData = Data([0xFF, 0xD8]) // Données non décodables en UTF-8
-        let mockResponse = HTTPURLResponse(
-            url: url,
-            statusCode: 200,
-            httpVersion: nil,
-            headerFields: nil
-        )!
+        let sut = AuthenticationRepository(client: mockClient)
         
-        MockURLProtocol.mockResponseData = mockData
-        MockURLProtocol.mockResponse = mockResponse
-        Connector.session = MockURLSession.shared
+        // When
+        mockClient.mockData = Data([0xFF, 0xD8]) // Données non décodables en UTF-8
         
-        let result = await AuthenticationRepository().tryGet(url: url)
+        // Then
+        let result = await sut.tryGet(url: url)
         XCTAssertFalse(result)
     }
-    
-    func testTryGet_IncorrectContent() async {
-        let url = URL(string: "https://example.com")!
-        let mockData = Data("Wrong content".utf8)
-        let mockResponse = HTTPURLResponse(
-            url: url,
-            statusCode: 200,
-            httpVersion: nil,
-            headerFields: nil
-        )!
-        
-        MockURLProtocol.mockResponseData = mockData
-        MockURLProtocol.mockResponse = mockResponse
-        Connector.session = MockURLSession.shared
-        
-        let result = await AuthenticationRepository().tryGet(url: url)
-        XCTAssertFalse(result)
-    }
-    
 }
 

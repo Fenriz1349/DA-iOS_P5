@@ -1,3 +1,6 @@
 *.xcuserstate
 *.log
 .DS_Store
+*.xcuserstate
+Aura/.DS_Store
+Aura/Aura.xcodeproj/xcuserdata/juliencotte.xcuserdatad/xcdebugger
