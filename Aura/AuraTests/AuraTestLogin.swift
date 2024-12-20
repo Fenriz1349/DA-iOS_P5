@@ -70,4 +70,36 @@ class AuraTestsLogin: XCTestCase {
         XCTAssertEqual(sut.errorMessage, "Mauvaise adresse mail / mot de passe")
         XCTAssertNil(sut.user)
     }
+    
+    func testSaveKeychain_Sucess() async {
+        // Given
+        let mockKeychain = MockKeychainService()
+        mockKeychain.shouldSaveSucceed = true
+        let mockRepository = MockAuthenticationRepository()
+        mockRepository.tryGetResult = true
+        mockRepository.getTokenResult = UUID(uuidString: "123E4567-E89B-12D3-A456-426614174000")
+        let sut = AuthenticationViewModel(onLoginSucceed: {}, repository: mockRepository, keychain: mockKeychain)
+        
+        // When
+        await sut.login(usermail: "test@test.com", password: "password")
+        
+        // Then
+        XCTAssertNil(sut.errorMessage)
+    }
+    
+    func testSaveKeychain_Fail() async {
+        // Given
+        let mockKeychain = MockKeychainService()
+        mockKeychain.shouldSaveSucceed = false
+        let mockRepository = MockAuthenticationRepository()
+        mockRepository.tryGetResult = true
+        mockRepository.getTokenResult = UUID(uuidString: "123E4567-E89B-12D3-A456-426614174000")
+        let sut = AuthenticationViewModel(onLoginSucceed: {}, repository: mockRepository, keychain: mockKeychain)
+        
+        // When
+        await sut.login(usermail: "test@test.com", password: "password")
+        
+        // Then
+        XCTAssertEqual(sut.errorMessage!, "Échec de la sauvegarde du token")
+    }
 }

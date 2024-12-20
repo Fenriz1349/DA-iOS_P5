@@ -79,3 +79,19 @@ class MockAuthenticationRepository: AuthenticationRepository {
         return getTokenResult
     }
 }
+
+class MockKeychainService: KeychainServiceProtocol {
+    var shouldSaveSucceed = true
+    var data: Data?
+    func save(key: String, data: Data) -> Bool {
+        return shouldSaveSucceed
+    }
+    
+    func load(key: String) -> Data? {
+        return nil
+    }
+    
+    func delete(key: String) {
+        return
+    }
+}

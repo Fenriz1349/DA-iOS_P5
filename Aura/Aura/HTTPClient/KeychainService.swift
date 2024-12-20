@@ -8,11 +8,22 @@
 import Foundation
 import Security
 
+// L'ajout du protocol servira à override les fonctions pour les tests
+protocol KeychainServiceProtocol {
+    func save(key: String, data: Data) -> Bool
+    func load(key: String) -> Data?
+    func delete(key: String)
+}
 // Le keychainService est à gérer des données sensibles comme le token
-class KeychainService {
+class KeychainService: KeychainServiceProtocol {
     
     // Permet d'enregistrer un nouveau token et de supprimer l'ancienne valeur si elle existe
-    static func save(key: String, data: Data) -> Bool {
+    // ce token doit forcemet être au format UUID
+    func save(key: String, data: Data) -> Bool {
+        guard let tokenString = String(data: data, encoding: .utf8),
+              UUID(uuidString: tokenString) != nil else {
+            return false
+        }
         let query: [String: Any] = [
             kSecClass as String: kSecClassGenericPassword,
             kSecAttrAccount as String: key,
@@ -26,7 +37,7 @@ class KeychainService {
     }
     
     // Permet de récuperer un token si on a la clé
-    static func load(key: String) -> Data? {
+    func load(key: String) -> Data? {
         let query: [String: Any] = [
             kSecClass as String: kSecClassGenericPassword,
             kSecAttrAccount as String: key,
@@ -45,7 +56,7 @@ class KeychainService {
     }
     
     // Permet de supprimer une clé
-    static func delete(key: String) {
+    func delete(key: String) {
         let query: [String: Any] = [
             kSecClass as String: kSecClassGenericPassword,
             kSecAttrAccount as String: key

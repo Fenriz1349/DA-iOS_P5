@@ -11,14 +11,16 @@ import SwiftUI
 // Il gère less interactions avec l'utilisateur
 class AuthenticationViewModel: ObservableObject {
     let repository: AuthenticationRepository
+    let keychain: KeychainServiceProtocol
     @Published var user: User?
     @Published var errorMessage : String?
     
     let onLoginSucceed: () -> Void
     
-    init(onLoginSucceed: @escaping () -> Void, repository: AuthenticationRepository = AuthenticationRepository()) {
+    init(onLoginSucceed: @escaping () -> Void, repository: AuthenticationRepository = AuthenticationRepository(), keychain: KeychainServiceProtocol = KeychainService()) {
         self.onLoginSucceed = onLoginSucceed
         self.repository = repository
+        self.keychain = keychain
     }
     
     @MainActor
@@ -53,7 +55,8 @@ class AuthenticationViewModel: ObservableObject {
         }
         
         // Sauvegarder le token dans le Keychain
-        guard KeychainService.save(key: "authToken", data: Data(token.uuidString.utf8)) else {
+        guard keychain.save(key: "authToken",
+                                   data: Data(token.uuidString.utf8)) else {
             setErrorMessage("Échec de la sauvegarde du token")
             return
         }
