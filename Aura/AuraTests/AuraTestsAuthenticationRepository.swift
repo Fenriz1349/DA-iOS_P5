@@ -13,7 +13,7 @@ class AuraTestsAuthenticationRepository: XCTestCase {
     func testTryGet_Success() async {
         // Given
         // Création d'un client et simulation de sa réponse
-        let mockClient = MockHTTPClient()
+        let mockClient = MockHTTPClientAuthentication()
         mockClient.mockData = Data("It works!".utf8)
         let url = URL(string: "https://example.com")!
         // Injection du client dans le repository
@@ -27,7 +27,7 @@ class AuraTestsAuthenticationRepository: XCTestCase {
     
     func testTryGetURL_Sucess_WrongString() async {
         // Given
-        let mockClient = MockHTTPClient()
+        let mockClient = MockHTTPClientAuthentication()
         mockClient.mockData = Data("Wrong Data".utf8)
         let url = URL(string: "https://example.com")!
         let sut = AuthenticationRepository(client: mockClient)
@@ -40,7 +40,7 @@ class AuraTestsAuthenticationRepository: XCTestCase {
     
     func testTryGet_NetworkError() async {
         // Given
-        let mockClient = MockHTTPClient()
+        let mockClient = MockHTTPClientAuthentication()
         let url = URL(string: "https://example.com")!
         let sut = AuthenticationRepository(client: mockClient)
         
@@ -53,7 +53,7 @@ class AuraTestsAuthenticationRepository: XCTestCase {
     
     func testTryGet_InvalidData() async {
         // Given
-        let mockClient = MockHTTPClient()
+        let mockClient = MockHTTPClientAuthentication()
         let url = URL(string: "https://example.com")!
         let sut = AuthenticationRepository(client: mockClient)
         
@@ -67,7 +67,7 @@ class AuraTestsAuthenticationRepository: XCTestCase {
     
     func testGetTokenFrom_Success_ReturnsToken() async {
         // Given
-        let mockClient = MockHTTPClient()
+        let mockClient = MockHTTPClientAuthentication()
         let email = Email(local: Local(name: "test"), domain: Domain(name: "test", domExtension: "com"))
         let password = "password"
         let validUUIDString = "123E4567-E89B-12D3-A456-426614174000"
@@ -91,7 +91,7 @@ class AuraTestsAuthenticationRepository: XCTestCase {
         // Given
         let email = Email(local: Local(name: "test"), domain: Domain(name: "test", domExtension: "com"))
         let password = "password"
-        let mockClient = MockHTTPClient()
+        let mockClient = MockHTTPClientAuthentication()
         let json = """
             {
                 "key": "value"
@@ -111,7 +111,7 @@ class AuraTestsAuthenticationRepository: XCTestCase {
           // Given
         let email = Email(local: Local(name: "test"), domain: Domain(name: "test", domExtension: "com"))
         let password = "password"
-          let mockClient = MockHTTPClient()
+          let mockClient = MockHTTPClientAuthentication()
           mockClient.mockError = URLError(.notConnectedToInternet)
           let repository = AuthenticationRepository(client: mockClient)
           

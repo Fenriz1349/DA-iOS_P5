@@ -10,14 +10,18 @@ import Foundation
 class User: Identifiable {
     let id = UUID()
     var userEmail : Email
+    var currentBalance: Double
     var transactions: [Transaction]
     
     var totalAmount: Double {
-        return transactions.map {$0.amount}.reduce(0,+)
+        return transactions.map {$0.value}.reduce(0,+)
     }
     
-    init(userEmail: Email, transactions: [Transaction]) {
+    init(userEmail: Email, currentBalance: Double = 0.0, transactions: [Transaction] = []) {
         self.userEmail = userEmail
+        self.currentBalance = currentBalance
         self.transactions = transactions
     }
+    
+    
 }

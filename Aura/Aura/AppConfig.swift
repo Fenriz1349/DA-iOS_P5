@@ -21,4 +21,9 @@ struct AppConfig {
     var authURL: URL {
         URL(string: authURLString)!
     }
+    
+    func getAccountURL() -> URL {
+        let URLString = baseURLString + "/account"
+        return URL(string: URLString)!
+    }
 }

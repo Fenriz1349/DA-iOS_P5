@@ -12,12 +12,11 @@ import SwiftUI
 class AuthenticationViewModel: ObservableObject {
     let repository: AuthenticationRepository
     let keychain: KeychainServiceProtocol
-    @Published var user: User?
     @Published var errorMessage : String?
     
-    let onLoginSucceed: () -> Void
+    let onLoginSucceed: (User) -> Void
     
-    init(onLoginSucceed: @escaping () -> Void, repository: AuthenticationRepository = AuthenticationRepository(), keychain: KeychainServiceProtocol = KeychainService()) {
+    init(onLoginSucceed: @escaping (User) -> Void, repository: AuthenticationRepository = AuthenticationRepository(), keychain: KeychainServiceProtocol = KeychainService()) {
         self.onLoginSucceed = onLoginSucceed
         self.repository = repository
         self.keychain = keychain
@@ -55,18 +54,16 @@ class AuthenticationViewModel: ObservableObject {
         }
         
         // Sauvegarder le token dans le Keychain
-        guard keychain.save(key: "authToken",
-                                   data: Data(token.uuidString.utf8)) else {
+        guard keychain.save(key: usermail, data: Data(token.uuidString.utf8)) else {
             setErrorMessage("Échec de la sauvegarde du token")
             return
         }
         
         // Créer un utilisateur
-        let user = User(userEmail: username, transactions: [])
+        let user = User(userEmail: username)
         
         // Login réussi
-        self.user = user
-        print("L'utilisateur \(self.user!.userEmail.emailAdress) vient nous dire Ah que Coucou!")
-        onLoginSucceed()
+        print("L'utilisateur \(user.userEmail.emailAdress) vient nous dire Ah que Coucou!")
+        onLoginSucceed(user)
     }
 }

@@ -78,6 +78,6 @@ struct AuthenticationView: View {
 }
 
 #Preview {
-    AuthenticationView(viewModel: AuthenticationViewModel(onLoginSucceed: {
+    AuthenticationView(viewModel: AuthenticationViewModel(onLoginSucceed: {_ in 
     }))
 }

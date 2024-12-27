@@ -9,9 +9,9 @@ import Foundation
 
 // Le repository ne s'occupe que de récuperer les data du Connector pour les mapper avec la logique métier
 class AuthenticationRepository {
-    private let client: HTTPClient
+    private let client: HTTPClientAuthentication
     
-    init(client: HTTPClient = Connector()) {
+    init(client: HTTPClientAuthentication = ConnectorAuthentication()) {
             self.client = client
         }
     
@@ -32,10 +32,8 @@ class AuthenticationRepository {
     
     func getTokenFrom(username: Email, password: String) async -> UUID? {
         do {
-            let data = try await client.performAuthRequest(username: username.emailAdress, password: password, url: AppConfig().authURL)
-            guard let token = JSONMapping.JSONAuthDecoder(data) else {
-                return nil
-            }
+            let data = try await client.performAuthRequest(username: username.emailAdress, password: password)
+            let token = try JSONMapping.jsonAuthDecoder(data) 
             return token
         } catch {
             return nil

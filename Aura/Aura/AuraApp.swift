@@ -14,9 +14,9 @@ struct AuraApp: App {
     var body: some Scene {
         WindowGroup {
             Group {
-                if viewModel.isLogged {
+                if viewModel.isLogged, let accountViewModel = viewModel.accountViewModel {
                     TabView {
-                        AccountDetailView(viewModel: viewModel.accountDetailViewModel)
+                        AccountView(viewModel: accountViewModel)
                             .tabItem {
                                 Image(systemName: "person.crop.circle")
                                 Text("Account")

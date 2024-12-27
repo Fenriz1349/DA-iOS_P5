@@ -18,14 +18,13 @@ class AuraTestsLogin: XCTestCase {
         mockRepository.getTokenResult = UUID(uuidString: "123E4567-E89B-12D3-A456-426614174000")
                 
         var isSucess = false
-        let sut = AuthenticationViewModel(onLoginSucceed: {isSucess = true}, repository: mockRepository)
+        let sut = AuthenticationViewModel(onLoginSucceed: {_ in isSucess = true}, repository: mockRepository)
         
         // When
         await sut.login(usermail: "test@aura.app", password: "test123")
         
         // Then
         XCTAssertNil(sut.errorMessage)
-        XCTAssertEqual(sut.user?.userEmail.emailAdress, "test@aura.app")
         XCTAssertTrue(isSucess)
     }
     
@@ -33,27 +32,25 @@ class AuraTestsLogin: XCTestCase {
         // Given
         let mockRepository = MockAuthenticationRepository()
         mockRepository.tryGetResult = false
-        let sut = AuthenticationViewModel(onLoginSucceed: {}, repository: mockRepository)
+        let sut = AuthenticationViewModel(onLoginSucceed: {_ in }, repository: mockRepository)
         
         // When
         await sut.login(usermail: "", password: "")
         // Then
         XCTAssertEqual(sut.errorMessage!, "Erreur de connexion au serveur")
-        XCTAssertNil(sut.user)
     }
 
     func testLogin_emailFormatError() async {
         // Given
         let mockRepository = MockAuthenticationRepository()
         mockRepository.tryGetResult = true
-        let sut = AuthenticationViewModel(onLoginSucceed: {}, repository: mockRepository)
+        let sut = AuthenticationViewModel(onLoginSucceed: {_ in }, repository: mockRepository)
         
         // When
         await sut.login(usermail: "", password: "validPassword")
         
         // Then
         XCTAssertEqual(sut.errorMessage!, "Le format de l'email n'est pas valide")
-        XCTAssertNil(sut.user)
     }
     
     func testLogin_tokenError() async {
@@ -61,14 +58,13 @@ class AuraTestsLogin: XCTestCase {
         let mockRepository = MockAuthenticationRepository()
         mockRepository.tryGetResult = true
         mockRepository.getTokenResult = nil
-        let sut = AuthenticationViewModel(onLoginSucceed: {}, repository: mockRepository)
+        let sut = AuthenticationViewModel(onLoginSucceed: {_ in }, repository: mockRepository)
         
         // When
         await sut.login(usermail: "test@test.com", password: "wrongPassword")
         
         // Then
         XCTAssertEqual(sut.errorMessage, "Mauvaise adresse mail / mot de passe")
-        XCTAssertNil(sut.user)
     }
     
     func testSaveKeychain_Sucess() async {
@@ -78,7 +74,7 @@ class AuraTestsLogin: XCTestCase {
         let mockRepository = MockAuthenticationRepository()
         mockRepository.tryGetResult = true
         mockRepository.getTokenResult = UUID(uuidString: "123E4567-E89B-12D3-A456-426614174000")
-        let sut = AuthenticationViewModel(onLoginSucceed: {}, repository: mockRepository, keychain: mockKeychain)
+        let sut = AuthenticationViewModel(onLoginSucceed: {_ in }, repository: mockRepository, keychain: mockKeychain)
         
         // When
         await sut.login(usermail: "test@test.com", password: "password")
@@ -94,7 +90,7 @@ class AuraTestsLogin: XCTestCase {
         let mockRepository = MockAuthenticationRepository()
         mockRepository.tryGetResult = true
         mockRepository.getTokenResult = UUID(uuidString: "123E4567-E89B-12D3-A456-426614174000")
-        let sut = AuthenticationViewModel(onLoginSucceed: {}, repository: mockRepository, keychain: mockKeychain)
+        let sut = AuthenticationViewModel(onLoginSucceed: {_ in }, repository: mockRepository, keychain: mockKeychain)
         
         // When
         await sut.login(usermail: "test@test.com", password: "password")
