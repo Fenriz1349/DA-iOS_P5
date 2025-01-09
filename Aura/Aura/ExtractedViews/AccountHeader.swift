@@ -16,11 +16,6 @@ struct AccountHeader: View {
             Text(balance.toEuroFormat())
                 .font(.system(size: 60, weight: .bold))
                 .foregroundColor(Color(hex: "#94A684")) // Using the green color you provided
-            Image(systemName: "eurosign.circle.fill")
-                .resizable()
-                .scaledToFit()
-                .frame(height: 80)
-                .foregroundColor(Color(hex: "#94A684"))
         }
         .padding(.top)
     }

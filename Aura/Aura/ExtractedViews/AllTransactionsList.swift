@@ -8,11 +8,22 @@
 import SwiftUI
 
 struct AllTransactionsList: View {
+    let transactions : [Transaction]
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        VStack(alignment: .leading, spacing: 10) {
+            Text("Recent Transactions")
+                .font(.headline)
+                .padding([.horizontal])
+            ScrollView {
+                ForEach(transactions) { transaction in
+                    AccountRow(transaction: transaction)
+                }
+            }
+        }
     }
 }
 
 #Preview {
-    AllTransactionsList()
+    AllTransactionsList(transactions: User.defaultUser.transactions)
 }
