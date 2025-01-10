@@ -11,11 +11,11 @@ struct AccountHeader: View {
     let balance: Double
     var body: some View {
         VStack(spacing: 10) {
-            Text("Your Balance")
+            Text(Texts.headerTitle)
                 .font(.headline)
             Text(balance.toEuroFormat())
                 .font(.system(size: 60, weight: .bold))
-                .foregroundColor(Color(hex: "#94A684")) // Using the green color you provided
+                .foregroundColor(.customGreen)
         }
         .padding(.top)
     }

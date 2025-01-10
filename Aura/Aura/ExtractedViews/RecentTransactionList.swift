@@ -14,7 +14,7 @@ struct RecentTransactionList: View {
     }
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
-            Text("Recent Transactions")
+            Text(Texts.recentTransaction)
                 .font(.headline)
                 .padding([.horizontal])
             ForEach(recentTransaction) { transaction in

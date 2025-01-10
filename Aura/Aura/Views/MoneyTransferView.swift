@@ -15,11 +15,11 @@ struct MoneyTransferView: View {
         var body: some View {
             VStack(spacing: 20) {
                 // Adding a fun header image
-                Image(systemName: "arrow.right.arrow.left.circle.fill")
+                Image(systemName: Icons.leftRightArrow)
                     .resizable()
                     .scaledToFit()
                     .frame(width: 80, height: 80)
-                    .foregroundColor(Color(hex: "#94A684"))
+                    .foregroundColor(.customGreen)
                     .padding()
                     .scaleEffect(animationScale)
                     .onAppear {
@@ -28,14 +28,14 @@ struct MoneyTransferView: View {
                         }
                     }
                 
-                Text("Send Money!")
+                Text(Texts.sendMoney)
                     .font(.largeTitle)
                     .fontWeight(.heavy)
 
                 VStack(alignment: .leading) {
-                    Text("Recipient (Email or Phone)")
+                    Text(Texts.recipient)
                         .font(.headline)
-                    TextField("Enter recipient's info", text: $viewModel.recipient)
+                    TextField(Texts.recipientInfo, text: $viewModel.recipient)
                         .padding()
                         .background(Color.gray.opacity(0.2))
                         .cornerRadius(8)
@@ -43,9 +43,9 @@ struct MoneyTransferView: View {
                 }
                 
                 VStack(alignment: .leading) {
-                    Text("Amount (€)")
+                    Text(Texts.amount)
                         .font(.headline)
-                    TextField("0.00", text: $viewModel.amount)
+                    TextField(Texts.zero, text: $viewModel.amount)
                         .padding()
                         .background(Color.gray.opacity(0.2))
                         .cornerRadius(8)
@@ -54,11 +54,11 @@ struct MoneyTransferView: View {
 
                 Button(action: viewModel.sendMoney) {
                     HStack {
-                        Image(systemName: "arrow.right.circle.fill")
-                        Text("Send")
+                        Image(systemName: Icons.rigthArrow)
+                        Text(Texts.send)
                     }
                     .padding()
-                    .background(Color(hex: "#94A684"))
+                    .background(.customGreen)
                     .foregroundColor(.white)
                     .cornerRadius(8)
                 }

@@ -30,6 +30,8 @@
 		681B91BF2D1F0B7300EE38BD /* RecentTransactionList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 681B91BE2D1F0B7300EE38BD /* RecentTransactionList.swift */; };
 		681B91C12D1F0DD200EE38BD /* Transaction+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 681B91C02D1F0DD200EE38BD /* Transaction+Ext.swift */; };
 		686307482D3000E000011353 /* AllTransactionsList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 686307472D3000E000011353 /* AllTransactionsList.swift */; };
+		686307602D301F3300011353 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6863075F2D301F3300011353 /* Constants.swift */; };
+		686307782D31097200011353 /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 686307772D31097200011353 /* CustomButton.swift */; };
 		68B606452D019FD5007D4EC6 /* AppConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68B606442D019FD5007D4EC6 /* AppConfig.swift */; };
 		68B6064B2D0303E4007D4EC6 /* Connector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68B6064A2D0303E4007D4EC6 /* Connector.swift */; };
 		68B606512D030C04007D4EC6 /* DataMapping.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68B606502D030C04007D4EC6 /* DataMapping.swift */; };
@@ -78,6 +80,8 @@
 		681B91BE2D1F0B7300EE38BD /* RecentTransactionList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentTransactionList.swift; sourceTree = "<group>"; };
 		681B91C02D1F0DD200EE38BD /* Transaction+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Transaction+Ext.swift"; sourceTree = "<group>"; };
 		686307472D3000E000011353 /* AllTransactionsList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllTransactionsList.swift; sourceTree = "<group>"; };
+		6863075F2D301F3300011353 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		686307772D31097200011353 /* CustomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButton.swift; sourceTree = "<group>"; };
 		68B606442D019FD5007D4EC6 /* AppConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AppConfig.swift; path = Aura/AppConfig.swift; sourceTree = SOURCE_ROOT; };
 		68B6064A2D0303E4007D4EC6 /* Connector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Connector.swift; sourceTree = "<group>"; };
 		68B606502D030C04007D4EC6 /* DataMapping.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataMapping.swift; sourceTree = "<group>"; };
@@ -204,6 +208,7 @@
 				68C99C8A2CF8FB8E002F75A0 /* Transaction.swift */,
 				68B606442D019FD5007D4EC6 /* AppConfig.swift */,
 				681B91B62D1EE02B00EE38BD /* AccountResponse.swift */,
+				6863075F2D301F3300011353 /* Constants.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -224,6 +229,7 @@
 				681B91BC2D1F0A8E00EE38BD /* AccountRow.swift */,
 				681B91BE2D1F0B7300EE38BD /* RecentTransactionList.swift */,
 				686307472D3000E000011353 /* AllTransactionsList.swift */,
+				686307772D31097200011353 /* CustomButton.swift */,
 			);
 			path = ExtractedViews;
 			sourceTree = "<group>";
@@ -367,12 +373,14 @@
 				53D4189F2AC717890070ADB1 /* MoneyTransferViewModel.swift in Sources */,
 				68C99C892CF8FAA4002F75A0 /* User.swift in Sources */,
 				681B91C12D1F0DD200EE38BD /* Transaction+Ext.swift in Sources */,
+				686307602D301F3300011353 /* Constants.swift in Sources */,
 				53D4188D2AC709F40070ADB1 /* AppViewModel.swift in Sources */,
 				681B91BD2D1F0A8E00EE38BD /* AccountRow.swift in Sources */,
 				53D418A12AC71B8F0070ADB1 /* View+Extensions.swift in Sources */,
 				68C99C902CF9B76C002F75A0 /* ErrorLabel.swift in Sources */,
 				68C99C972CF9D0D5002F75A0 /* AuthenticationRepository.swift in Sources */,
 				68B606512D030C04007D4EC6 /* DataMapping.swift in Sources */,
+				686307782D31097200011353 /* CustomButton.swift in Sources */,
 				53D418992AC70FD80070ADB1 /* Color+Extensions.swift in Sources */,
 				681B91B92D1F046900EE38BD /* User+Ext.swift in Sources */,
 				681A95582D155D9700C765FF /* ConnectorAuthentication.swift in Sources */,

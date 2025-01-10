@@ -12,8 +12,8 @@ struct AuthenticationView: View {
     @State private var username: String = ""
     @State private var password: String = ""
     
-    let gradientStart = Color(hex: "#94A684").opacity(0.7)
-    let gradientEnd = Color(hex: "#94A684").opacity(0.0) // Fades to transparent
+    let gradientStart = Color(.customGreen).opacity(0.7)
+    let gradientEnd = Color(.customGreen).opacity(0.0) // Fades to transparent
     var body: some View {
         
         ZStack {
@@ -22,16 +22,16 @@ struct AuthenticationView: View {
                 .edgesIgnoringSafeArea(.all)
             
             VStack(spacing: 20) {
-                Image(systemName: "person.circle")
+                Image(systemName: Icons.person)
                     .resizable()
                     .scaledToFit()
                     .frame(width: 50, height: 50)
                 
-                Text("Welcome !")
+                Text(Texts.welcome)
                     .font(.largeTitle)
                     .fontWeight(.semibold)
                 
-                TextField("Adresse email", text: $username)
+                TextField(Texts.mailAdress, text: $username)
                     .padding()
                     .background(Color(UIColor.secondarySystemBackground))
                     .cornerRadius(8)
@@ -39,7 +39,7 @@ struct AuthenticationView: View {
                     .keyboardType(.emailAddress)
                     .disableAutocorrection(true)
                 
-                SecureField("Mot de passe", text: $password)
+                SecureField(Texts.password, text: $password)
                     .padding()
                     .background(Color(UIColor.secondarySystemBackground))
                     .cornerRadius(8)
@@ -49,7 +49,7 @@ struct AuthenticationView: View {
                         await viewModel.login(usermail: username, password: password)
                     }
                 }) {
-                    Text("Se connecter")
+                    Text(Texts.login)
                         .foregroundColor(.white)
                         .frame(maxWidth: .infinity)
                         .padding()

@@ -13,7 +13,6 @@ struct AccountDetailView: View {
     var body: some View {
         VStack (spacing: 20) {
             AccountHeader(balance: user.currentBalance)
-                .padding(.top, 20)
             AllTransactionsList(transactions: user.transactions)
         }
     }

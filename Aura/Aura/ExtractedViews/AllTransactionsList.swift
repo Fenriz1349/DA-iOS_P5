@@ -11,8 +11,8 @@ struct AllTransactionsList: View {
     let transactions : [Transaction]
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 10) {
-            Text("Recent Transactions")
+        VStack(alignment: .leading, spacing: 20) {
+            Text(Texts.allTransaction)
                 .font(.headline)
                 .padding([.horizontal])
             ScrollView {

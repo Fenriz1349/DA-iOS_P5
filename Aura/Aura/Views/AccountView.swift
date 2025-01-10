@@ -14,22 +14,21 @@ struct AccountView: View {
         NavigationView {
             VStack(spacing: 20) {
                 AccountHeader(balance: viewModel.user.currentBalance)
-                Image(systemName: "eurosign.circle.fill")
+                Image(systemName: Icons.euroCircle)
                     .resizable()
                     .scaledToFit()
                     .frame(height: 80)
-                    .foregroundColor(Color(hex: "#94A684"))
-                // Display recent transactions
+                    .foregroundColor(.customGreen)
                 RecentTransactionList(transactions: viewModel.user.transactions.getRecentTransactions(limit: 3))
                 
                 // Button to see details of transactions
                 NavigationLink(destination: AccountDetailView(user: viewModel.user)) {
                     HStack {
-                        Image(systemName: "list.bullet")
-                        Text("See Transaction Details")
+                        Image(systemName: Icons.listBullet)
+                        Text(Texts.seeDetails)
                     }
                     .padding()
-                    .background(Color(hex: "#94A684"))
+                    .background(.customGreen)
                     .foregroundColor(.white)
                     .cornerRadius(8)
                 }
