@@ -47,7 +47,7 @@ class MockURLSession {
     }
 }
 
-// Permet de 
+
 class MockHTTPClient: HTTPClient {
     
     var mockData: Data?
@@ -59,12 +59,45 @@ class MockHTTPClient: HTTPClient {
         }
         return mockData ?? Data()
     }
-    func performAuthRequest(username: String, password: String, url: URL) async throws -> Data {
+}
+
+class MockHTTPClientAuthentication: HTTPClientAuthentication {
+    var mockData: Data?
+    var mockError: Error?
+    func performRequest(from url: URL, with method: Aura.HTTPMethod) async throws -> Data {
         if let error = mockError {
             throw error
         }
         return mockData ?? Data()
     }
+    
+    
+    func performAuthRequest(username: String, password: String) async throws -> Data {
+        if let error = mockError {
+            throw error
+        }
+        return mockData ?? Data()
+    }
+}
+
+class MockHTTPClientAccount: HTTPClientAccount {
+    var mockData: Data?
+    var mockError: Error?
+    
+    func performRequest(from url: URL, with method: Aura.HTTPMethod) async throws -> Data {
+        if let error = mockError {
+            throw error
+        }
+        return mockData ?? Data()
+    }
+    
+    func performGetAccount(username: String) async throws -> Data {
+        if let error = mockError {
+            throw error
+        }
+        return mockData ?? Data()
+    }
+    
 }
 
 class MockAuthenticationRepository: AuthenticationRepository {
@@ -79,3 +112,26 @@ class MockAuthenticationRepository: AuthenticationRepository {
         return getTokenResult
     }
 }
+
+class MockKeychainService: KeychainServiceProtocol {
+    var shouldSaveSucceed = true
+    var mockData: Data?
+    var mockToken: UUID?
+    func save(key: String = "authKey", data: Data) -> Bool {
+        mockData = data
+        return shouldSaveSucceed
+    }
+    
+    func load(key: String = "authKey") -> Data? {
+        return mockData
+    }
+    
+    func delete(key: String) {
+        return
+    }
+    
+    func getToken(key: String) -> UUID? {
+        return mockToken
+    }
+}
+

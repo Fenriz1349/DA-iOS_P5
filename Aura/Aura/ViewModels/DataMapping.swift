@@ -18,7 +18,12 @@ struct DataMapping {
 }
 
 struct JSONMapping {
-    static func JSONAuthEncoder(username: String, password: String) -> Data {
+    /// Fonction pour encoder le username et le password pour créer le body pour le login
+    /// - Parameters:
+    ///   - username: email de l'utilisateur
+    ///   - password: mot de passe de l'utilisateur
+    /// - Returns: le body qui servira à construire l'urlRequest
+    static func jsonAuthEncoder(username: String, password: String) -> Data {
         let encoder = JSONEncoder()
         let loginData = [
             "username": username,
@@ -27,7 +32,10 @@ struct JSONMapping {
         return try! encoder.encode(loginData)
     }
     
-    static func JSONAuthDecoder(_ data: Data) -> UUID? {
+    /// Fonction pour decoder la data reçu lors de la connexion et renvoyer le token
+    /// - Parameter data: la data reçu du serveur
+    /// - Returns: le token créé lors de la connexion
+    static func jsonAuthDecoder(_ data: Data) throws -> UUID {
         // Décodage de la réponse JSON
         let decoder = JSONDecoder()
         do {
@@ -37,10 +45,24 @@ struct JSONMapping {
             if let tokenString = decodedResponse["token"], let token = UUID(uuidString: tokenString) {
                 return token
             } else {
-                return nil
+                throw URLError(.cannotDecodeContentData)
             }
         } catch {
-            return nil
+            throw URLError(.cannotDecodeContentData)
+        }
+    }
+    
+    /// Permet de decoder la reponse du serveur qui contient les données lié au compte
+    /// - Parameters:
+    ///   - data: la data sous forme de json
+    /// - Returns: la donnée decodé au format AccountResponse
+    static func jsonAccountDecoder(_ data: Data) throws -> AccountResponse {
+        let decoder = JSONDecoder()
+        do {
+            return try decoder.decode(AccountResponse.self, from: data)
+
+        } catch {
+            throw URLError(.cannotDecodeContentData)
         }
     }
 }

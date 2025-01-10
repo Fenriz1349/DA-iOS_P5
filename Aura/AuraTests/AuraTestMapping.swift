@@ -45,7 +45,7 @@ class AuraTestsMapping: XCTestCase {
         
         // When
         let jsonData = try! encoder.encode(expectedJSON)
-        let result = JSONMapping.JSONAuthEncoder(username: username, password: password)
+        let result = JSONMapping.jsonAuthEncoder(username: username, password: password)
         
         // Then
         XCTAssertEqual(result, jsonData)
@@ -62,57 +62,72 @@ class AuraTestsMapping: XCTestCase {
            let data = Data(json.utf8)
            
            // When
-           let result = JSONMapping.JSONAuthDecoder(data)
-           
-           // Then
-           XCTAssertEqual(result?.uuidString, validUUIDString)
+        do {
+            let result = try JSONMapping.jsonAuthDecoder(data)
+            // Then
+            XCTAssertEqual(result.uuidString, validUUIDString)
+        } catch {
+            
+        }
        }
     
-    func testJSONAuthDecoder_WithoutTokenKey_ReturnsNil() {
-            // Given
-            let json = """
+    func testJSONAuthDecoder_WithoutTokenKey_ReturnError() {
+        // Given
+        let json = """
             {
                 "key": "value"
             }
             """
-            let data = Data(json.utf8)
+        let data = Data(json.utf8)
+        
+        // When
+        do {
+            let _ = try JSONMapping.jsonAuthDecoder(data)
+        } catch let error as URLError {
+            // Then/
+            XCTAssertEqual(error.code, URLError.Code.cannotDecodeContentData)
+        } catch {
             
-            // When
-            let result = JSONMapping.JSONAuthDecoder(data)
-            
-            // Then
-            XCTAssertNil(result)
         }
+    }
     
-    func testJSONAuthDecoder_WithInvalidTokenValue_ReturnsNil() {
-            // Given
-            let json = """
+    func testJSONAuthDecoder_WithInvalidTokenValue_ReturnError() {
+        // Given
+        let json = """
             {
                 "token": "invalid-uuid"
             }
             """
-            let data = Data(json.utf8)
+        let data = Data(json.utf8)
+        
+        // When
+        do {
+            let _ = try JSONMapping.jsonAuthDecoder(data)
+        } catch let error as URLError {
+            // Then/
+            XCTAssertEqual(error.code, URLError.Code.cannotDecodeContentData)
+        } catch {
             
-            // When
-            let result = JSONMapping.JSONAuthDecoder(data)
-            
-            // Then
-            XCTAssertNil(result)
         }
+    }
     
     func testJSONAuthDecoder_WithMalformedJSON_ReturnsNil() {
-           // Given
-           let json = """
+        // Given
+        let json = """
            {
                "token": "123e4567-e89b-12d3-a456-426614174000"
            """
-           // JSON mal formé, manque une accolade fermante
-           let data = Data(json.utf8)
-           
-           // When
-           let result = JSONMapping.JSONAuthDecoder(data)
-           
-           // Then
-           XCTAssertNil(result)
-       }
+        // JSON mal formé, manque une accolade fermante
+        let data = Data(json.utf8)
+        
+        // Then
+        do {
+            let _ = try JSONMapping.jsonAuthDecoder(data)
+        } catch let error as URLError {
+            // Then/
+            XCTAssertEqual(error.code, URLError.Code.cannotDecodeContentData)
+        } catch {
+            
+        }
+    }
 }

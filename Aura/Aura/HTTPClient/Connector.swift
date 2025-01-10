@@ -7,17 +7,16 @@
 
 import Foundation
 
-// Le Connector ne va s'occuper que de gèrer les appels réseaux
-// Il sera de protocol HTTPCLient qui garanti qu'il aura toujours la fonction performRequest
+// Le Connector ne va s'occuper que de gerer les appels réseaux
 protocol HTTPClient {
     func performRequest(from url: URL, with method: HTTPMethod) async throws -> Data
-    func performAuthRequest(username: String, password: String, url: URL) async throws -> Data
 }
 
-struct Connector : HTTPClient {
+class Connector: HTTPClient {
     private let session: URLSession
     // Ajout d'une init pour pouvoir injecter une URLSession pour les tests
-    init(session: URLSession = .shared) {
+    // .ephemeral permet de ne rien sauvegarder en cache
+    init(session: URLSession = URLSession(configuration: .ephemeral)) {
         self.session = session
     }
     
@@ -42,21 +41,6 @@ struct Connector : HTTPClient {
         let (data, httpResponse) = try await executeDataRequest(request)
         
         // Vérifie le code de réponse HTTP
-        guard httpResponse.statusCode == 200 else {
-            throw URLError(.badServerResponse)
-        }
-        return data
-    }
-    
-    func performAuthRequest(username: String, password: String, url: URL) async throws -> Data {
-        // Créer la requête POST
-        let body = JSONMapping.JSONAuthEncoder(username: username, password: password)
-        var request = try createURLRequest(from: url, with: .POST)
-        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-        request.httpBody = body
-        
-        // Renvoyer les données brutes
-        let (data, httpResponse) = try await executeDataRequest(request)
         guard httpResponse.statusCode == 200 else {
             throw URLError(.badServerResponse)
         }

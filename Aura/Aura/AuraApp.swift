@@ -14,18 +14,18 @@ struct AuraApp: App {
     var body: some Scene {
         WindowGroup {
             Group {
-                if viewModel.isLogged {
+                if viewModel.isLogged, let accountViewModel = viewModel.accountViewModel {
                     TabView {
-                        AccountDetailView(viewModel: viewModel.accountDetailViewModel)
+                        AccountView(viewModel: accountViewModel)
                             .tabItem {
-                                Image(systemName: "person.crop.circle")
-                                Text("Account")
+                                Image(systemName: IconName.personCirle)
+                                Text("account".localized)
                             }
                         
                         MoneyTransferView()
                             .tabItem {
-                                Image(systemName: "arrow.right.arrow.left.circle")
-                                Text("Transfer")
+                                Image(systemName: IconName.leftRightArrowCircle)
+                                Text("transfer".localized)
                             }
                     }
                     

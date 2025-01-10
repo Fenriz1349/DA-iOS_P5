@@ -12,58 +12,42 @@ struct AuthenticationView: View {
     @State private var username: String = ""
     @State private var password: String = ""
     
-    let gradientStart = Color(hex: "#94A684").opacity(0.7)
-    let gradientEnd = Color(hex: "#94A684").opacity(0.0) // Fades to transparent
+    init(viewModel: AuthenticationViewModel) {
+            self.viewModel = viewModel
+        }
+    
     var body: some View {
         
         ZStack {
-            // Background gradient
-            LinearGradient(gradient: Gradient(colors: [gradientStart, gradientEnd]), startPoint: .top, endPoint: .bottomLeading)
-                .edgesIgnoringSafeArea(.all)
-            
+            CustomGradient()
             VStack(spacing: 20) {
-                Image(systemName: "person.circle")
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 50, height: 50)
-                
-                Text("Welcome !")
+                CustomImage(image: IconName.person, size: 50)
+                Text("welcome".localized)
                     .font(.largeTitle)
                     .fontWeight(.semibold)
-                
-                TextField("Adresse email", text: $username)
-                    .padding()
-                    .background(Color(UIColor.secondarySystemBackground))
-                    .cornerRadius(8)
-                    .autocapitalization(.none)
-                    .keyboardType(.emailAddress)
-                    .disableAutocorrection(true)
-                
-                SecureField("Mot de passe", text: $password)
-                    .padding()
-                    .background(Color(UIColor.secondarySystemBackground))
-                    .cornerRadius(8)
-                
+                CustomTextField(color: Color(UIColor.secondarySystemBackground),
+                                placeholder: "mailAdress".localized,
+                                text: $username,
+                                type: .email)
+                CustomTextField(color: Color(UIColor.secondarySystemBackground),
+                                placeholder: "password".localized,
+                                text: $password,
+                                type: .password)
                 Button(action: {
                     Task {
                         await viewModel.login(usermail: username, password: password)
                     }
                 }) {
-                    Text("Se connecter")
-                        .foregroundColor(.white)
-                        .frame(maxWidth: .infinity)
-                        .padding()
-                        .background(Color.black)
-                        .cornerRadius(8)
+                    CustomButton(icon: nil, text: "login".localized, color: .black)
                 }
                 VStack {
-                    if let message = viewModel.errorMessage {
+                    if let message = viewModel.appViewModel.errorMessage {
                         ErrorLabel(message: message)
                             .transition(.move(edge: .top).combined(with: .opacity))
                             .task {
                                 // Affiche le label pendant 5 secondes puis réinstalle la variable à false
                                 try? await Task.sleep(nanoseconds: 5 * 1_000_000_000)
-                                viewModel.hideErrorMessage()
+                                viewModel.appViewModel.hideErrorMessage()
                             }
                     }
                 }
@@ -78,6 +62,5 @@ struct AuthenticationView: View {
 }
 
 #Preview {
-    AuthenticationView(viewModel: AuthenticationViewModel(onLoginSucceed: {
-    }))
+//    AuthenticationView(viewModel: AuthenticationViewModel(onLoginSucceed: , appViewModel: AppViewModel()))
 }

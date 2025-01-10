@@ -9,6 +9,16 @@ import SwiftUI
 
 extension View {
     func endEditing(_ force: Bool) {
-        UIApplication.shared.windows.forEach { $0.endEditing(force)}
+        if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
+            windowScene.windows.forEach { $0.endEditing(force) }
+        }
     }
+    
+    func textFieldStyle(color: Color) -> some View {
+            self
+                .padding()
+                .background(color)
+                .cornerRadius(8)
+                .shadow(color: .gray.opacity(0.2), radius: 4, x: 0, y: 2)
+        }
 }
