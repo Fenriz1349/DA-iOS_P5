@@ -11,7 +11,7 @@ struct AccountRow: View {
     let transaction: Transaction
     var body: some View {
         HStack {
-            Image(systemName: transaction.value >= 0.0 ? Icons.upArrow : Icons.dowArrow)
+            Image(systemName: transaction.value >= 0.0 ? IconName.upArrow : IconName.dowArrow)
                 .foregroundColor(transaction.value >= 0.0 ? .green : .red)
             Text(transaction.label)
             Spacer()

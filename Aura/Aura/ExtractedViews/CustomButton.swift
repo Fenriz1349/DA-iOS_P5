@@ -8,11 +8,24 @@
 import SwiftUI
 
 struct CustomButton: View {
+    let icon : String?
+    let text : String
+    let color : Color
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        HStack {
+            if let icon = icon {
+                Image(systemName: icon)
+            }
+            Text(text)
+        }
+        .frame(maxWidth: .infinity)
+        .padding()
+        .background(color)
+        .foregroundColor(.white)
+        .cornerRadius(8)
     }
 }
 
 #Preview {
-    CustomButton()
+    CustomButton(icon: IconName.listBullet, text: "seeDetails".localized, color: .customGreen)
 }

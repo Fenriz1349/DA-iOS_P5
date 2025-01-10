@@ -11,7 +11,7 @@ struct AccountHeader: View {
     let balance: Double
     var body: some View {
         VStack(spacing: 10) {
-            Text(Texts.headerTitle)
+            Text("headerTitle".localized)
                 .font(.headline)
             Text(balance.toEuroFormat())
                 .font(.system(size: 60, weight: .bold))

@@ -14,26 +14,13 @@ struct AccountView: View {
         NavigationView {
             VStack(spacing: 20) {
                 AccountHeader(balance: viewModel.user.currentBalance)
-                Image(systemName: Icons.euroCircle)
-                    .resizable()
-                    .scaledToFit()
-                    .frame(height: 80)
-                    .foregroundColor(.customGreen)
+                CustomImage(image: IconName.euroCircle, size: 80, color: .customGreen)
                 RecentTransactionList(transactions: viewModel.user.transactions.getRecentTransactions(limit: 3))
                 
-                // Button to see details of transactions
                 NavigationLink(destination: AccountDetailView(user: viewModel.user)) {
-                    HStack {
-                        Image(systemName: Icons.listBullet)
-                        Text(Texts.seeDetails)
-                    }
-                    .padding()
-                    .background(.customGreen)
-                    .foregroundColor(.white)
-                    .cornerRadius(8)
+                    CustomButton(icon: IconName.listBullet, text: "seeDetails".localized, color: .customGreen)
                 }
-                .padding([.horizontal, .bottom])
-                
+                .padding(.horizontal)
                 Spacer()
             }
             .onTapGesture {
@@ -41,9 +28,9 @@ struct AccountView: View {
             }
         }
     }
-        
 }
 
 #Preview {
     AccountView(viewModel: AccountViewModel(repository: AccountRepository(), user: User.defaultUser))
+        .environment(\.locale, Locale(identifier: "en"))
 }

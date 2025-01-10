@@ -18,10 +18,9 @@ class AccountViewModel: ObservableObject {
     @MainActor
     func setUser() async {
         guard let accountResponse = await repository.getAccountResponse(from: user.userEmail.emailAdress) else {
-            print("ça marche pas")
+            user = User.defaultUser
             return
         }
-        print("ça marche")
         user.updateUser(from: accountResponse)
     }
 }

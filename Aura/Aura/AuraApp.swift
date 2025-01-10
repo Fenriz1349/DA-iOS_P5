@@ -18,14 +18,14 @@ struct AuraApp: App {
                     TabView {
                         AccountView(viewModel: accountViewModel)
                             .tabItem {
-                                Image(systemName: "person.crop.circle")
-                                Text("Account")
+                                Image(systemName: IconName.personCirle)
+                                Text("account".localized)
                             }
                         
                         MoneyTransferView()
                             .tabItem {
-                                Image(systemName: "arrow.right.arrow.left.circle")
-                                Text("Transfer")
+                                Image(systemName: IconName.leftRightArrowCircle)
+                                Text("transfer".localized)
                             }
                     }
                     

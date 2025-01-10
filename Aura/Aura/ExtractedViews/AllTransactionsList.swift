@@ -12,7 +12,7 @@ struct AllTransactionsList: View {
     
     var body: some View {
         VStack(alignment: .leading, spacing: 20) {
-            Text(Texts.allTransaction)
+            Text("allTransaction".localized)
                 .font(.headline)
                 .padding([.horizontal])
             ScrollView {

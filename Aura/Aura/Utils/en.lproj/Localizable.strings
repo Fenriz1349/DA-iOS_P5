@@ -1,0 +1,38 @@
+//
+//  Localizable.strings
+//  Aura
+//
+//  Created by Julien Cotte on 10/01/2025.
+//
+
+/* TabBar */
+"account" = "Account";
+"transfer" = "Transfer";
+
+/* Authentication View */
+"welcome" = "Welcome !";
+"mailAdress" = "Email";
+"password" = "Password";
+"login" = "Login";
+
+/* Account View */
+"headerTitle" = "Your Balance";
+"recentTransaction" = "Recent Transactions";
+"seeDetails" = "See Transaction Details";
+
+/* Authentication details View */
+"allTransaction" = "All Transactions";
+
+/* MoneyTransfer details View */
+"sendMoney" = "Send Money!";
+"recipient" = "Recipient (Email or Phone)";
+"recipientInfo" = "Enter recipient's info";
+"amount" = "Amount (€)";
+"zero" = "0.00 €";
+"send" = "Send";
+
+/* Error Messages */
+"connexionFailed" = "Server connection failed";
+"invalidMailFormat" = "The email format is invalid";
+"wrongLogin" = "Wrong email address / password";
+"tokenFail" = "Failed to save the token";
