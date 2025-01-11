@@ -8,19 +8,19 @@
 import Foundation
 
 class AccountViewModel: ObservableObject {
-    let repository: AccountRepository
-    @Published var  user: User
-    init(repository: AccountRepository, user: User) {
+    private let repository: AccountRepository
+    let appViewModel: AppViewModel
+    
+    init(repository: AccountRepository, appViewModel: AppViewModel) {
         self.repository = repository
-        self.user = user
+        self.appViewModel = appViewModel
     }
     
     @MainActor
     func setUser() async {
-        guard let accountResponse = await repository.getAccountResponse(from: user.userEmail.emailAdress) else {
-            user = User.defaultUser
+        guard let accountResponse = await repository.getAccountResponse(from: appViewModel.userApp.email) else {
             return
         }
-        user.updateUser(from: accountResponse)
+        appViewModel.userApp.updateUser(from: accountResponse)
     }
 }

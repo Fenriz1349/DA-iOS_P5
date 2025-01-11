@@ -65,4 +65,17 @@ struct JSONMapping {
             throw URLError(.cannotDecodeContentData)
         }
     }
+    
+    /// Fonction pour encoder le username et le password pour créer le body pour le login
+    /// - Parameters:
+    ///   - username: email de l'utilisateur
+    ///   - password: mot de passe de l'utilisateur
+    /// - Returns: le body qui servira à construire l'urlRequest
+    static func jsonMoneyEncoder(recipient: String, amount: Decimal) -> Data {
+        let moneyData = [
+            "recipient": recipient,
+            "amount": amount
+        ] as [String: Any]
+        return try! JSONSerialization.data(withJSONObject: moneyData, options: [])
+    }
 }

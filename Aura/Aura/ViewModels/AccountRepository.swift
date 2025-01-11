@@ -8,7 +8,7 @@
 import Foundation
 
 class AccountRepository {
-    let client : HTTPClientAccount
+    private let client : HTTPClientAccount
     
     init(client: HTTPClientAccount = ConnectorAccount()) {
         self.client = client

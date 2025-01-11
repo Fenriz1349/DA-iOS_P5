@@ -12,4 +12,8 @@ extension String {
     var localized: String {
         return NSLocalizedString(self, comment: self)
     }
+    
+    func toDecimal() -> Decimal {
+        return Decimal(Double(self) ?? 0.0)
+    }
 }

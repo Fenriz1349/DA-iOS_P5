@@ -8,13 +8,9 @@
 import SwiftUI
 
 struct AuthenticationView: View {
-    @ObservedObject var viewModel = AppViewModel().authenticationViewModel
+    @ObservedObject var viewModel: AuthenticationViewModel
     @State private var username: String = ""
     @State private var password: String = ""
-    
-    init(viewModel: AuthenticationViewModel) {
-            self.viewModel = viewModel
-        }
     
     var body: some View {
         
@@ -62,5 +58,5 @@ struct AuthenticationView: View {
 }
 
 #Preview {
-//    AuthenticationView(viewModel: AuthenticationViewModel(onLoginSucceed: , appViewModel: AppViewModel()))
+//    AuthenticationView(viewModel: AuthenticationViewModel(onLoginSucceed: , onLoginSucceed: {_ in }, appViewModel: AppViewModel()))
 }

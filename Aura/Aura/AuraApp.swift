@@ -14,7 +14,9 @@ struct AuraApp: App {
     var body: some Scene {
         WindowGroup {
             Group {
-                if viewModel.isLogged, let accountViewModel = viewModel.accountViewModel {
+                if viewModel.isLogged,
+                   let accountViewModel = viewModel.accountViewModel,
+                   let moneyTransferViewModel = viewModel.moneyTransferViewModel {
                     TabView {
                         AccountView(viewModel: accountViewModel)
                             .tabItem {
@@ -22,7 +24,7 @@ struct AuraApp: App {
                                 Text("account".localized)
                             }
                         
-                        MoneyTransferView()
+                        MoneyTransferView(viewModel: moneyTransferViewModel)
                             .tabItem {
                                 Image(systemName: IconName.leftRightArrowCircle)
                                 Text("transfer".localized)
@@ -36,8 +38,8 @@ struct AuraApp: App {
                     
                 }
             }
-            .accentColor(Color(hex: "#94A684"))
-            .animation(.easeInOut(duration: 0.5), value: UUID())
+            .accentColor(.customGreen)
+            .animation(.easeInOut(duration: 0.5), value: viewModel.isLogged)
         }
     }
 }

@@ -37,6 +37,9 @@
 		6863077E2D312C0900011353 /* CustomImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6863077D2D312C0900011353 /* CustomImage.swift */; };
 		686307852D31438200011353 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 686307842D31438200011353 /* Localizable.strings */; };
 		686307882D3146CA00011353 /* String+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 686307872D3146CA00011353 /* String+Ext.swift */; };
+		686307E62D3155D000011353 /* MoneyTransfertRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 686307E52D3155D000011353 /* MoneyTransfertRepository.swift */; };
+		686307E82D31588700011353 /* ConnectorMoneyTransfer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 686307E72D31588700011353 /* ConnectorMoneyTransfer.swift */; };
+		686307EA2D31625B00011353 /* SucessLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 686307E92D31625B00011353 /* SucessLabel.swift */; };
 		68B606452D019FD5007D4EC6 /* AppConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68B606442D019FD5007D4EC6 /* AppConfig.swift */; };
 		68B6064B2D0303E4007D4EC6 /* Connector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68B6064A2D0303E4007D4EC6 /* Connector.swift */; };
 		68B606512D030C04007D4EC6 /* DataMapping.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68B606502D030C04007D4EC6 /* DataMapping.swift */; };
@@ -93,6 +96,9 @@
 		686307832D31438200011353 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		686307862D31441600011353 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
 		686307872D3146CA00011353 /* String+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Ext.swift"; sourceTree = "<group>"; };
+		686307E52D3155D000011353 /* MoneyTransfertRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoneyTransfertRepository.swift; sourceTree = "<group>"; };
+		686307E72D31588700011353 /* ConnectorMoneyTransfer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectorMoneyTransfer.swift; sourceTree = "<group>"; };
+		686307E92D31625B00011353 /* SucessLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SucessLabel.swift; sourceTree = "<group>"; };
 		68B606442D019FD5007D4EC6 /* AppConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AppConfig.swift; path = Aura/AppConfig.swift; sourceTree = SOURCE_ROOT; };
 		68B6064A2D0303E4007D4EC6 /* Connector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Connector.swift; sourceTree = "<group>"; };
 		68B606502D030C04007D4EC6 /* DataMapping.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataMapping.swift; sourceTree = "<group>"; };
@@ -195,6 +201,7 @@
 				68C99C962CF9D0D5002F75A0 /* AuthenticationRepository.swift */,
 				68B606502D030C04007D4EC6 /* DataMapping.swift */,
 				681A95622D1568D500C765FF /* AccountRepository.swift */,
+				686307E52D3155D000011353 /* MoneyTransfertRepository.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -238,6 +245,7 @@
 			isa = PBXGroup;
 			children = (
 				68C99C8F2CF9B76C002F75A0 /* ErrorLabel.swift */,
+				686307E92D31625B00011353 /* SucessLabel.swift */,
 				681B91BA2D1F09BB00EE38BD /* AccountHeader.swift */,
 				681B91BC2D1F0A8E00EE38BD /* AccountRow.swift */,
 				681B91BE2D1F0B7300EE38BD /* RecentTransactionList.swift */,
@@ -257,6 +265,7 @@
 				68B6064A2D0303E4007D4EC6 /* Connector.swift */,
 				681A95572D155D9700C765FF /* ConnectorAuthentication.swift */,
 				681A955D2D15612900C765FF /* ConnectorAccount.swift */,
+				686307E72D31588700011353 /* ConnectorMoneyTransfer.swift */,
 			);
 			path = HTTPClient;
 			sourceTree = "<group>";
@@ -383,6 +392,7 @@
 				53D418912AC70A920070ADB1 /* AuthenticationView.swift in Sources */,
 				68B6064B2D0303E4007D4EC6 /* Connector.swift in Sources */,
 				6863077A2D31151C00011353 /* CustomTextField.swift in Sources */,
+				686307E82D31588700011353 /* ConnectorMoneyTransfer.swift in Sources */,
 				68B606452D019FD5007D4EC6 /* AppConfig.swift in Sources */,
 				68FA05612D2FBB77007DBA09 /* AccountDetailView.swift in Sources */,
 				6863077E2D312C0900011353 /* CustomImage.swift in Sources */,
@@ -392,6 +402,8 @@
 				53D418932AC70AB10070ADB1 /* AccountView.swift in Sources */,
 				53D4189F2AC717890070ADB1 /* MoneyTransferViewModel.swift in Sources */,
 				68C99C892CF8FAA4002F75A0 /* User.swift in Sources */,
+				686307E62D3155D000011353 /* MoneyTransfertRepository.swift in Sources */,
+				686307EA2D31625B00011353 /* SucessLabel.swift in Sources */,
 				681B91C12D1F0DD200EE38BD /* Transaction+Ext.swift in Sources */,
 				686307602D301F3300011353 /* IconName.swift in Sources */,
 				53D4188D2AC709F40070ADB1 /* AppViewModel.swift in Sources */,

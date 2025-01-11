@@ -7,18 +7,26 @@
 
 import Foundation
 
+@MainActor
 class MoneyTransferViewModel: ObservableObject {
-    @Published var recipient: String = ""
-    @Published var amount: String = ""
-    @Published var transferMessage: String = ""
+    private let repository: MoneyTransfertRepository
+    let appViewModel: AppViewModel
     
-    func sendMoney() {
-        // Logic to send money - for now, we're just setting a success message.
-        // You can later integrate actual logic.
-        if !recipient.isEmpty && !amount.isEmpty {
-            transferMessage = "Successfully transferred \(amount) to \(recipient)"
+    init(repository: MoneyTransfertRepository = MoneyTransfertRepository(),
+         appViewModel: AppViewModel) {
+        self.repository = repository
+        self.appViewModel = appViewModel
+    }
+#warning("configurer le message pour traiter les erreurs, pas en decimal, pas une bonne adresse, erreur de connexion")
+    func sendMoney(recipient: String, amount: Decimal) async {
+        let user = appViewModel.userApp
+        print(user.userEmail.emailAdress)
+        if await repository.trySendMoney(username: user.email, recipient: recipient, amount: amount) {
+            print("reussite")
+            appViewModel.setErrorMessage("Successfully transferred \(amount) to \(recipient)")
         } else {
-            transferMessage = "Please enter recipient and amount."
+            print("echec")
+            appViewModel.setErrorMessage("Please enter recipient and amount.")
         }
     }
 }

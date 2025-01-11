@@ -11,16 +11,16 @@ import SwiftUI
 // Il gère les interactions avec l'utilisateur
 @MainActor
 class AuthenticationViewModel: ObservableObject {
-    let repository: AuthenticationRepository
-    let keychain: KeychainServiceProtocol
+    private let repository: AuthenticationRepository
+    private let keychain: KeychainServiceProtocol
     let appViewModel: AppViewModel
-    
     let onLoginSucceed: (User) -> Void
     
     init(onLoginSucceed: @escaping (User) -> Void,
          appViewModel: AppViewModel,
          repository: AuthenticationRepository = AuthenticationRepository(),
-         keychain: KeychainServiceProtocol = KeychainService()) {
+         keychain: KeychainServiceProtocol = KeychainService()
+    ) {
         self.onLoginSucceed = onLoginSucceed
         self.appViewModel = appViewModel
         self.repository = repository
@@ -56,7 +56,8 @@ class AuthenticationViewModel: ObservableObject {
         let user = User(userEmail: username)
         
         // Login réussi
-        print("L'utilisateur \(user.userEmail.emailAdress) vient nous dire Ah que Coucou!")
+        appViewModel.loginUser(user: user)
         onLoginSucceed(user)
+        print("L'utilisateur \(appViewModel.userApp.email) vient nous dire Ah que Coucou!")
     }
 }
