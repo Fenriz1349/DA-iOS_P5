@@ -32,7 +32,13 @@
 "send" = "Envoyer";
 
 /* Error Messages */
-"connexionFailed" = "Erreur de connexion au serveur";
-"invalidMailFormat" = "Le format de l'email n'est pas valide";
-"wrongLogin" = "Mauvaise adresse mail / mot de passe";
-"tokenFail" = "Échec de la sauvegarde du token";
+"loginSucess" = "Bonjour %@ !";
+"connexionFailed" = "La connexion au serveur a échoué. Veuillez réessayer.";
+"invalidMailFormat" = "L’adresse email saisie est invalide. Merci de vérifier.";
+"wrongLogin" = "L’adresse email ou le mot de passe est incorrect. Merci de réessayer.";
+"tokenFail" = "Une erreur est survenue lors de la sauvegarde des informations. Veuillez réessayer.";
+"wrongRecipient" = "Le destinataire est invalide. Utilisez une adresse email ou un numéro français.";
+"wrongAmmount" = "Le montant ne peut pas être vide. Merci de saisir un montant valide.";
+"transferFail" = "Echec de l'envoie d'argent";
+"transferSucess" = "Super vous venez d'envoyer\n %@ \nà %@ !";
+"fetchAccount" = "Oups, mais voici la version d'essai";

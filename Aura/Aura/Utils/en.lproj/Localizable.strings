@@ -32,7 +32,13 @@
 "send" = "Send";
 
 /* Error Messages */
-"connexionFailed" = "Server connection failed";
-"invalidMailFormat" = "The email format is invalid";
-"wrongLogin" = "Wrong email address / password";
-"tokenFail" = "Failed to save the token";
+"loginSucess" = "Hello %@ !";
+"connexionFailed" = "Connection to the server failed. Please try again.";
+"invalidMailFormat" = "The email address entered is invalid. Please check it.";
+"wrongLogin" = "The email address or password is incorrect. Please try again.";
+"tokenFail" = "An error occurred while saving the information. Please try again.";
+"wrongRecipient" = "The recipient is invalid. Use an email address or a French phone number.";
+"wrongAmmount" = "The amount cannot be empty. Please enter a valid amount.";
+"transferFail" = "Failed to send money.";
+"transferSucess" = "Great! You just sent\n %@ \nto %@ !";
+"fetchAccount" = "Failed to fetch account details";

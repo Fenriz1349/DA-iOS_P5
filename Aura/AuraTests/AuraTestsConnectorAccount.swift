@@ -22,7 +22,7 @@ class AuraTestsConnectorAccount: XCTestCase {
 //
 //        // When
 //        // Simuler une réponse HTTP valide
-//        let url = AppConfig().getAccountURL()
+//        let url = AppConfig().getAccountURL
 //        let mockResponse = HTTPURLResponse(
 //            url: url,
 //            statusCode: 200,

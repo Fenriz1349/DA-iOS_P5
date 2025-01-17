@@ -11,7 +11,13 @@ struct AppConfig {
 
     let baseURLString: String = "http://127.0.0.1:8080"
     var authURLString: String {
-        return baseURLString + "/auth"
+        baseURLString + "/auth"
+    }
+    var accountURLString: String {
+        baseURLString + "/account"
+    }
+    var moneyURLString: String {
+        accountURLString + "/transfer"
     }
     
     var baseUrl: URL {
@@ -22,8 +28,11 @@ struct AppConfig {
         URL(string: authURLString)!
     }
     
-    func getAccountURL() -> URL {
-        let URLString = baseURLString + "/account"
-        return URL(string: URLString)!
+    var accountURL: URL {
+         URL(string: accountURLString)!
+    }
+    
+    var moneyURL: URL {
+        URL(string: moneyURLString)!
     }
 }

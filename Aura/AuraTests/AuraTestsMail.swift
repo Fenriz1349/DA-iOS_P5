@@ -200,15 +200,15 @@ class AuraTestsMail: XCTestCase {
         
         // Then
         for testString in testStrings {
-            XCTAssertFalse(Email.isValidEmail(testString))
+            XCTAssertFalse(Email.isValid(testString))
         }
     }
     
     func testisEmail_isValidEmail_returnTrue () {
-        XCTAssertTrue(Email.isValidEmail("test@test.fr"))
-        XCTAssertTrue(Email.isValidEmail("Jean.Jacques!Chirac@AZERT123.com"))
-        XCTAssertTrue(Email.isValidEmail("TEST@TEST.FR"))
-        XCTAssertTrue(Email.isValidEmail("test@test.test.test.FR"))
+        XCTAssertTrue(Email.isValid("test@test.fr"))
+        XCTAssertTrue(Email.isValid("Jean.Jacques!Chirac@AZERT123.com"))
+        XCTAssertTrue(Email.isValid("TEST@TEST.FR"))
+        XCTAssertTrue(Email.isValid("test@test.test.test.FR"))
     }
     
     func testEmailAdress() {

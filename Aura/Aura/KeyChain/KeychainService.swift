@@ -21,7 +21,7 @@ class KeychainService: KeychainServiceProtocol {
     
     // Permet d'enregistrer un nouveau token et de supprimer l'ancienne valeur si elle existe
     // ce token doit forcemet être au format UUID
-    func save(key: String = "authKey", data: Data) -> Bool {
+    func save(key: String, data: Data) -> Bool {
         guard !key.isEmpty else {
             return false
         }
@@ -42,7 +42,7 @@ class KeychainService: KeychainServiceProtocol {
     }
     
     // Permet de récuperer un token si on a la clé
-    func load(key: String = "authKey") -> Data? {
+    func load(key: String) -> Data? {
         let query: [String: Any] = [
             kSecClass as String: kSecClassGenericPassword,
             kSecAttrAccount as String: key,
@@ -70,7 +70,7 @@ class KeychainService: KeychainServiceProtocol {
     }
     
     // Permet de récuperer la data au format UUID
-    func getToken(key: String = "authKey") -> UUID? {
+    func getToken(key: String) -> UUID? {
         guard let data = load(key: key),
               let tokenString = String(data: data, encoding: .utf8),
               let token = UUID(uuidString: tokenString) else {

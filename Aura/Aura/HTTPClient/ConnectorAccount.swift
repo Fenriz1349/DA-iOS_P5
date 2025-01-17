@@ -27,9 +27,8 @@ class ConnectorAccount: Connector, HTTPClientAccount {
         guard let token = tokenKeychain.getToken(key: username) else {
             throw URLError(.userAuthenticationRequired)
         }
-
         // Créer la requête Get avec le token en Header
-        let url = AppConfig().getAccountURL()
+        let url = AppConfig().accountURL
         var request = try createURLRequest(from: url, with: .GET)
         request.setValue(token.uuidString, forHTTPHeaderField: "token")
         

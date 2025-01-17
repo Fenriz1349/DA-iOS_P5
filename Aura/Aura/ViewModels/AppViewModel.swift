@@ -5,61 +5,44 @@
 //  Created by Vincent Saluzzo on 29/09/2023.
 //
 
-import Foundation
+import SwiftUI
 
 @MainActor
 class AppViewModel: ObservableObject {
-    @Published var isLogged: Bool
-    @Published var user: User
-    @Published var errorMessage : String?
-    
+    @Published var isLogged: Bool = false
+    @Published var userApp: User = User.defaultUser
     var accountViewModel: AccountViewModel?
-    init() {
-        self.isLogged = false
-        self.user = User.defaultUser
-    }
+    var moneyTransferViewModel: MoneyTransferViewModel?
     
     func loginUser(user: User) {
         self.isLogged = true
-        self.user = user
+        self.userApp = user
+        updateAppViewModel()
     }
-    
-    func logoutUser() {
-        self.isLogged = false
-        self.user = User.defaultUser
-    }
-    
-    // fonction pour configurer le message d'erreur et l'afficher
-    func setErrorMessage(_ message: String) {
-        errorMessage = message
-    }
-    
-    func hideErrorMessage() {
-        errorMessage = nil
-    }
-    
+        
     var authenticationViewModel: AuthenticationViewModel {
-           return AuthenticationViewModel(onLoginSucceed: { [weak self] user in
-               self?.loginUser(user: user)
-               self?.updateUserDetails()
-           }, appViewModel: self)
-       }
+        AuthenticationViewModel(
+            onLoginSucceed: { [weak self] user in
+                self?.loginUser(user: user)
+            },
+            appViewModel: self
+        )
+    }
     
-    func updateUserDetails() {
+    func updateAppViewModel() {
         guard isLogged else { return }
         
         // Créer un AccountViewModel
-        let repository = AccountRepository(client: ConnectorAccount())
-        self.accountViewModel = AccountViewModel(repository: repository, user: user)
+        let accountRepository = AccountRepository(client: ConnectorAccount())
+        self.accountViewModel = AccountViewModel(repository: accountRepository, appViewModel: self)
+        
+        // Créer un MoneyTransferViewModel
+        let moneytransferRepository = MoneyTransfertRepository(client: ConnectorMoneyTransfer())
+        self.moneyTransferViewModel = MoneyTransferViewModel(repository: moneytransferRepository, appViewModel: self)
         
         // Appeler setUser() dans AccountViewModel pour récupérer les informations de l'utilisateur
-        Task {
-            await accountViewModel?.setUser()
-            
-            // Une fois les données récupérées, mettre à jour l'utilisateur dans AppViewModel
-            if let accountViewModel = accountViewModel {
-                self.user = accountViewModel.user
-            }
-        }
+//        Task {
+//            await self.accountViewModel?.updateAppUser()
+//        }
     }
 }

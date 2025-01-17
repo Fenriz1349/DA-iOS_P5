@@ -5,22 +5,40 @@
 //  Created by Vincent Saluzzo on 29/09/2023.
 //
 
-import Foundation
+import SwiftUI
 
+@MainActor
 class AccountViewModel: ObservableObject {
-    let repository: AccountRepository
-    @Published var  user: User
-    init(repository: AccountRepository, user: User) {
+    private let repository: AccountRepository
+    @Published var accountErrorMessage: String?
+    @Published var accountIsError: Bool = true
+    let appViewModel: AppViewModel
+    
+    init(repository: AccountRepository, appViewModel: AppViewModel) {
         self.repository = repository
-        self.user = user
+        self.appViewModel = appViewModel
     }
     
-    @MainActor
-    func setUser() async {
-        guard let accountResponse = await repository.getAccountResponse(from: user.userEmail.emailAdress) else {
-            user = User.defaultUser
+    func getUserResponse() async -> AccountResponse? {
+        guard let accountResponse = await repository.getAccountResponse(from: appViewModel.userApp.email) else {
+            accountIsError = true
+            accountErrorMessage = "fetchAccount".localized
+            return nil
+        }
+        return accountResponse
+    }
+    
+    func updateAppUser() async {
+        guard let response = await getUserResponse() else {
+            accountIsError = true
+            accountErrorMessage = "fetchAccount".localized
             return
         }
-        user.updateUser(from: accountResponse)
+
+        appViewModel.userApp.updateUser(from: response)
+        let sucessMessage = String(format: NSLocalizedString("loginSucess".localized, comment: ""), appViewModel.userApp.email)
+        accountErrorMessage = sucessMessage
+        accountIsError = false
+        objectWillChange.send()
     }
 }

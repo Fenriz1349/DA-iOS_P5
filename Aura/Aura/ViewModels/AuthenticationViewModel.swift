@@ -11,44 +11,50 @@ import SwiftUI
 // Il gère les interactions avec l'utilisateur
 @MainActor
 class AuthenticationViewModel: ObservableObject {
-    let repository: AuthenticationRepository
-    let keychain: KeychainServiceProtocol
+    private let repository: AuthenticationRepository
+    private let keychain: KeychainServiceProtocol
+    @Published var authenticationErrorMessage: String?
+    @Published var autenticationIsError: Bool = true
     let appViewModel: AppViewModel
-    
     let onLoginSucceed: (User) -> Void
     
     init(onLoginSucceed: @escaping (User) -> Void,
-         appViewModel: AppViewModel,
-         repository: AuthenticationRepository = AuthenticationRepository(),
-         keychain: KeychainServiceProtocol = KeychainService()) {
-        self.onLoginSucceed = onLoginSucceed
-        self.appViewModel = appViewModel
-        self.repository = repository
-        self.keychain = keychain
-    }
+             appViewModel: AppViewModel,
+             repository: AuthenticationRepository = AuthenticationRepository(),
+             keychain: KeychainServiceProtocol = KeychainService()
+        ) {
+            self.onLoginSucceed = onLoginSucceed
+            self.appViewModel = appViewModel
+            self.repository = repository
+            self.keychain = keychain
+        }
             
     func login(usermail: String, password: String) async {
         // Vérifier la connexion au serveur
         guard await repository.tryGet() else {
-            appViewModel.setErrorMessage("connexionFailed".localized)
+            autenticationIsError = true
+            authenticationErrorMessage = "connexionFailed".localized
             return
         }
         
         // Vérifier le format de l'email
         guard let username = Email.from(usermail) else {
-            appViewModel.setErrorMessage("invalidMailFormat".localized)
+            autenticationIsError = true
+            authenticationErrorMessage = "invalidMailFormat".localized
             return
         }
         
         // Récupérer le token
         guard let token = await repository.getTokenFrom(username: username, password: password) else {
-            appViewModel.setErrorMessage("wrongLogin".localized)
+            autenticationIsError = true
+            authenticationErrorMessage = "wrongLogin".localized
             return
         }
         
         // Sauvegarder le token dans le Keychain
         guard keychain.save(key: usermail, data: Data(token.uuidString.utf8)) else {
-            appViewModel.setErrorMessage("tokenFail".localized)
+            autenticationIsError = true
+            authenticationErrorMessage = "tokenFail".localized
             return
         }
         
@@ -56,7 +62,8 @@ class AuthenticationViewModel: ObservableObject {
         let user = User(userEmail: username)
         
         // Login réussi
-        print("L'utilisateur \(user.userEmail.emailAdress) vient nous dire Ah que Coucou!")
+        appViewModel.loginUser(user: user)
         onLoginSucceed(user)
+        print("L'utilisateur \(appViewModel.userApp.email) vient nous dire Ah que Coucou!")
     }
 }

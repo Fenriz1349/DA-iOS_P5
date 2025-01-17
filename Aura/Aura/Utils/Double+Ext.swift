@@ -8,9 +8,18 @@
 import Foundation
 
 extension Double {
-    // Methode pour convertir un Double en nombre à 2 virgules, changer le point en virgule et ajouter le symbole euro derrière
-    func toEuroFormat () -> String {
+    func toEuroFormat() -> String {
+        let numberFormatter = NumberFormatter()
+        numberFormatter.numberStyle = .decimal
+        numberFormatter.groupingSeparator = " "
+        numberFormatter.groupingSize = 3
+        numberFormatter.decimalSeparator = ","
+        numberFormatter.minimumFractionDigits = 2
+        numberFormatter.maximumFractionDigits = 2
         
-        return String(format: "%.2f€", self).replacingOccurrences(of: ".", with: ",")
+        if let formattedNumber = numberFormatter.string(from: NSNumber(value: self)) {
+            return "\(formattedNumber) €"
+        }
+        return ""
     }
 }
