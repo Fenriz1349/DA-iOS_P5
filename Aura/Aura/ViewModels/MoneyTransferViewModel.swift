@@ -5,28 +5,41 @@
 //  Created by Vincent Saluzzo on 29/09/2023.
 //
 
-import Foundation
+import SwiftUI
 
 @MainActor
 class MoneyTransferViewModel: ObservableObject {
     private let repository: MoneyTransfertRepository
+    @Published var transferErrorMessage: String?
+    @Published var transferIsError: Bool = true
+
     let appViewModel: AppViewModel
     
-    init(repository: MoneyTransfertRepository = MoneyTransfertRepository(),
-         appViewModel: AppViewModel) {
+    init(repository: MoneyTransfertRepository, appViewModel: AppViewModel) {
         self.repository = repository
         self.appViewModel = appViewModel
     }
-#warning("configurer le message pour traiter les erreurs, pas en decimal, pas une bonne adresse, erreur de connexion")
-    func sendMoney(recipient: String, amount: Decimal) async {
+
+    func sendMoney(recipient: String, amount: String) async {
+        guard recipient.isValidEmail() || recipient.isValidPhoneNumber() else {
+            transferIsError = true
+            transferErrorMessage = "wrongRecipient".localized
+            return
+        }
+        guard let decimal = amount.toDecimal() else {
+            transferIsError = true
+            transferErrorMessage = "wrongAmmount".localized
+            return
+        }
         let user = appViewModel.userApp
-        print(user.userEmail.emailAdress)
-        if await repository.trySendMoney(username: user.email, recipient: recipient, amount: amount) {
-            print("reussite")
-            appViewModel.setErrorMessage("Successfully transferred \(amount) to \(recipient)")
+        if await repository.trySendMoney(username: user.email, recipient: recipient, amount: decimal) {
+            let amountString = decimal.toEuroFormat()
+            let sucessMessage = String(format: NSLocalizedString("transferSucess".localized, comment: ""), amountString, recipient)
+            transferErrorMessage = sucessMessage
+            transferIsError = false
         } else {
-            print("echec")
-            appViewModel.setErrorMessage("Please enter recipient and amount.")
+            transferIsError = true
+            transferErrorMessage = "transferFail".localized
         }
     }
 }

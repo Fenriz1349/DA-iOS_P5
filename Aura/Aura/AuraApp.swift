@@ -9,37 +9,35 @@ import SwiftUI
 
 @main
 struct AuraApp: App {
-    @StateObject var viewModel = AppViewModel()
+    @StateObject var appViewModel = AppViewModel()
     
     var body: some Scene {
         WindowGroup {
             Group {
-                if viewModel.isLogged,
-                   let accountViewModel = viewModel.accountViewModel,
-                   let moneyTransferViewModel = viewModel.moneyTransferViewModel {
+                if appViewModel.isLogged,
+                   let accountViewModel = appViewModel.accountViewModel,
+                   let moneyTransferViewModel = appViewModel.moneyTransferViewModel {
                     TabView {
-                        AccountView(viewModel: accountViewModel)
+                        AccountView(accountViewModel: accountViewModel)
                             .tabItem {
                                 Image(systemName: IconName.personCirle)
                                 Text("account".localized)
                             }
-                        
-                        MoneyTransferView(viewModel: moneyTransferViewModel)
+                        MoneyTransferView(moneyTransferViewModel: moneyTransferViewModel)
                             .tabItem {
                                 Image(systemName: IconName.leftRightArrowCircle)
                                 Text("transfer".localized)
                             }
                     }
-                    
                 } else {
-                    AuthenticationView(viewModel: viewModel.authenticationViewModel)
+                    AuthenticationView(authenticationViewModel: appViewModel.authenticationViewModel)
                         .transition(.asymmetric(insertion: .move(edge: .trailing).combined(with: .opacity),
                                                 removal: .move(edge: .top).combined(with: .opacity)))
                     
                 }
             }
             .accentColor(.customGreen)
-            .animation(.easeInOut(duration: 0.5), value: viewModel.isLogged)
+            .animation(.easeInOut(duration: 0.5), value: appViewModel.isLogged)
         }
     }
 }

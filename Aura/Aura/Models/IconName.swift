@@ -17,5 +17,7 @@ struct IconName {
     static let leftRightArrowFill = "arrow.right.arrow.left.circle.fill"
     static let leftRightArrowCircle = "arrow.right.arrow.left.circle"
     static let rigthArrow = "arrow.right.circle.fill"
+    static let exclamationMark = "exclamationmark.triangle.fill"
+    static let checkCircle = "checkmark.circle.fill"
 }
 

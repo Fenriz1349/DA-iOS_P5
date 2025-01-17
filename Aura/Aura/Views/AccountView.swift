@@ -8,8 +8,11 @@
 import SwiftUI
 
 struct AccountView: View {
-    @ObservedObject var viewModel: AccountViewModel
-    var user: User { viewModel.appViewModel.userApp }
+    @ObservedObject var accountViewModel: AccountViewModel
+    
+    private var user : User {
+        accountViewModel.appViewModel.userApp
+    }
     
     var body: some View {
         NavigationView {
@@ -18,20 +21,37 @@ struct AccountView: View {
                 CustomImage(image: IconName.euroCircle, size: 80, color: .customGreen)
                 RecentTransactionList(transactions: user.transactions.getRecentTransactions(limit: 3))
                 
-                NavigationLink(destination: AccountDetailView(user: user)) {
-                    CustomButton(icon: IconName.listBullet, text: "seeDetails".localized, color: .customGreen)
+                NavigationLink(destination: AccountDetailView(user: accountViewModel.appViewModel.userApp)) {
+                    CustomButton(icon: IconName.listBullet, message: "seeDetails".localized, color: .customGreen)
                 }
-                .padding(.horizontal)
+                VStack {
+                    if let message = accountViewModel.accountErrorMessage {
+                        InfoLabel(message: message, isError: accountViewModel.accountIsError)
+                            .transition(.move(edge: .top).combined(with: .opacity))
+                            .task {
+                                // Affiche le label pendant 5 secondes puis réinstalle la variable à false
+                                try? await Task.sleep(nanoseconds: 5 * 1_000_000_000)
+                                accountViewModel.accountErrorMessage  = nil
+                                accountViewModel.accountIsError = true
+                            }
+                    }
+                }
+                .frame(height:80)
                 Spacer()
             }
+            .padding(.horizontal)
+//            .onAppear {
+//                    Task {
+//                       await accountViewModel.updateAppUser()
+//                    }
+//            }
             .onTapGesture {
-                self.endEditing(true)  // This will dismiss the keyboard when tapping outside
+                self.endEditing(true) 
             }
         }
     }
 }
 
 #Preview {
-    AccountView(viewModel: AccountViewModel(repository: AccountRepository(), appViewModel: AppViewModel()))
-        .environment(\.locale, Locale(identifier: "en"))
+    AccountView(accountViewModel: AccountViewModel(repository: AccountRepository(), appViewModel: AppViewModel()))
 }

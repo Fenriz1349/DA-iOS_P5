@@ -38,10 +38,8 @@ class ConnectorMoneyTransfer: Connector, HTTPClientMoneyTransfer {
         // La reponse est vide, mais on reçoit le statusCode 200 en cas de réussite
         let (_, httpResponse) = try await executeDataRequest(request)
         guard httpResponse.statusCode == 200 else {
-            print("erreur reseau \(httpResponse.statusCode)")
             throw URLError(.badServerResponse)
         }
-        print("reussite connexion")
         return true
     }
 }

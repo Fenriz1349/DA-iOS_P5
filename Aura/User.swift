@@ -26,6 +26,4 @@ class User: Identifiable {
         self.currentBalance = currentBalance
         self.transactions = transactions
     }
-    
-    
 }

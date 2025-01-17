@@ -23,7 +23,7 @@ class Email {
     }
     
     // fonction qui verifie si une string est un adresse mail valide
-    static func isValidEmail(_ email: String) -> Bool {
+    static func isValid(_ email: String) -> Bool {
         return Email.from(email) != nil
     }
     

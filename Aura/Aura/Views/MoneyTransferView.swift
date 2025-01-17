@@ -8,13 +8,12 @@
 import SwiftUI
 
 struct MoneyTransferView: View {
-    @ObservedObject var viewModel: MoneyTransferViewModel
+    @ObservedObject var moneyTransferViewModel: MoneyTransferViewModel
     @State var recipient: String = ""
     @State var amount: String = ""
     
     var body: some View {
         VStack(spacing: 20) {
-            // Adding a fun header image
             CustomImage(image: IconName.leftRightArrowFill, size: 80, color: .customGreen, isAnimated: true)
             Text("sendMoney".localized)
                 .font(.largeTitle)
@@ -32,29 +31,29 @@ struct MoneyTransferView: View {
             
             Button(action: {
                 Task{
-                    await viewModel.sendMoney(recipient: recipient, amount: amount.toDecimal())
+                    await moneyTransferViewModel.sendMoney(recipient: recipient, amount: amount)
+                    if moneyTransferViewModel.transferIsError {
+                        Task {
+                            // Affiche le label pendant 5 secondes puis réinstalle la variable à false
+                            try? await Task.sleep(nanoseconds: 5 * 1_000_000_000)
+                            moneyTransferViewModel.transferErrorMessage = nil
+                            moneyTransferViewModel.transferIsError = true
+                        }
+                    }
                 }
             })
             {
-                CustomButton(icon: IconName.rigthArrow, text: "send".localized, color: .customGreen)
+                CustomButton(icon: IconName.rigthArrow, message: "send".localized, color: .customGreen)
             }
-#warning("configurer le message de reussite ou echec")
             VStack {
-                if let message = viewModel.appViewModel.errorMessage {
-                    ErrorLabel(message: message)
+                if let message = moneyTransferViewModel.transferErrorMessage {
+                    InfoLabel(message: message, isError: moneyTransferViewModel.transferIsError)
                         .transition(.move(edge: .top).combined(with: .opacity))
-                        .task {
-                            // Affiche le label pendant 5 secondes puis réinstalle la variable à false
-                            try? await Task.sleep(nanoseconds: 5 * 1_000_000_000)
-                            viewModel.appViewModel.hideErrorMessage()
-                        }
                 }
             }
-            .frame(height:40)
-            
-            Spacer()
+            .frame(height: moneyTransferViewModel.transferIsError ? 80 : 120)
         }
-        .padding()
+        .padding(.horizontal, 40)
         .onTapGesture {
             self.endEditing(true)
         }
@@ -62,5 +61,5 @@ struct MoneyTransferView: View {
 }
 
 #Preview {
-//    MoneyTransferView()
+    MoneyTransferView(moneyTransferViewModel: MoneyTransferViewModel(repository: MoneyTransfertRepository(), appViewModel: AppViewModel()))
 }

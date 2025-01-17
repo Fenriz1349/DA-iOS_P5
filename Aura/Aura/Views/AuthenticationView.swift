@@ -8,12 +8,11 @@
 import SwiftUI
 
 struct AuthenticationView: View {
-    @ObservedObject var viewModel: AuthenticationViewModel
+    @ObservedObject var authenticationViewModel: AuthenticationViewModel
     @State private var username: String = ""
     @State private var password: String = ""
     
     var body: some View {
-        
         ZStack {
             CustomGradient()
             VStack(spacing: 20) {
@@ -31,23 +30,25 @@ struct AuthenticationView: View {
                                 type: .password)
                 Button(action: {
                     Task {
-                        await viewModel.login(usermail: username, password: password)
+                        await authenticationViewModel.login(usermail: username, password: password)
+                        await authenticationViewModel.appViewModel.accountViewModel?.updateAppUser()
+                    
                     }
                 }) {
-                    CustomButton(icon: nil, text: "login".localized, color: .black)
+                    CustomButton(icon: nil, message: "login".localized, color: .black)
                 }
                 VStack {
-                    if let message = viewModel.appViewModel.errorMessage {
-                        ErrorLabel(message: message)
+                    if let message = authenticationViewModel.authenticationErrorMessage {
+                        InfoLabel(message: message, isError: authenticationViewModel.autenticationIsError)
                             .transition(.move(edge: .top).combined(with: .opacity))
                             .task {
                                 // Affiche le label pendant 5 secondes puis réinstalle la variable à false
                                 try? await Task.sleep(nanoseconds: 5 * 1_000_000_000)
-                                viewModel.appViewModel.hideErrorMessage()
+                                authenticationViewModel.authenticationErrorMessage  = nil
                             }
                     }
                 }
-                .frame(height:40)
+                .frame(height:80)
             }
             .padding(.horizontal, 40)
         }
@@ -58,5 +59,9 @@ struct AuthenticationView: View {
 }
 
 #Preview {
-//    AuthenticationView(viewModel: AuthenticationViewModel(onLoginSucceed: , onLoginSucceed: {_ in }, appViewModel: AppViewModel()))
+    AuthenticationView(authenticationViewModel: AuthenticationViewModel(
+        onLoginSucceed: { user in
+            print("Utilisateur connecté")
+        },
+        appViewModel: AppViewModel()))
 }
