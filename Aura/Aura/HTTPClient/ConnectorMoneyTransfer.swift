@@ -21,6 +21,12 @@ class ConnectorMoneyTransfer: Connector, HTTPClientMoneyTransfer {
             super.init(session: session)
         }
     
+    /// Permet de simuler un envoie d'argent
+    /// - Parameters:
+    ///   - username: le userame du user pour recupérer son token
+    ///   - recipient: le destinataire
+    ///   - amount: le montant à envoyer
+    /// - Returns: renvoie true en cas de réussite ( httpResponse.statusCode == 200)
     func performMoneySending(username: String, recipient: String, amount: Decimal) async throws -> Bool {
         // Créer la requête POST
         let url = AppConfig().moneyURL

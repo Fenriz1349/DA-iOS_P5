@@ -13,6 +13,7 @@ enum TextFieldType {
     case decimal
 }
 
+// Permet de gérer l'affichage de tous les Textfields de l'app suivant leur type
 struct CustomTextField: View {
     let color: Color
     let placeholder: String

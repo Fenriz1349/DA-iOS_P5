@@ -13,7 +13,8 @@ struct AccountDetailView: View {
     var body: some View {
         VStack (spacing: 20) {
             AccountHeader(balance: user.currentBalance)
-            AllTransactionsList(transactions: user.transactions)
+            TransactionsList(title: "allTransaction".localized,
+                             transactions: user.transactions)
         }
     }
 }

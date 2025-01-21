@@ -18,9 +18,11 @@ protocol KeychainServiceProtocol {
 // Le keychainService est à gérer des données sensibles comme le token
 class KeychainService: KeychainServiceProtocol {
     
-    
-    // Permet d'enregistrer un nouveau token et de supprimer l'ancienne valeur si elle existe
-    // ce token doit forcemet être au format UUID
+    /// Permet de sauvegarder une data associé à une key et d'effacer l'ancienne data si la clé existait déja
+    /// - Parameters:
+    ///   - key: la clé
+    ///   - data: la data à enregistrer
+    /// - Returns: true si le save s'est fait, faux sinon
     func save(key: String, data: Data) -> Bool {
         guard !key.isEmpty else {
             return false
@@ -41,7 +43,9 @@ class KeychainService: KeychainServiceProtocol {
         return status == errSecSuccess
     }
     
-    // Permet de récuperer un token si on a la clé
+    /// Permet de récuperer un token si on a la clé
+    /// - Parameter key: la clé correspondant à la data
+    /// - Returns: la data si elle existe, nil sinon
     func load(key: String) -> Data? {
         let query: [String: Any] = [
             kSecClass as String: kSecClassGenericPassword,
@@ -60,7 +64,9 @@ class KeychainService: KeychainServiceProtocol {
         return dataTypeRef as? Data
     }
     
-    // Permet de supprimer une clé
+    
+    /// Permet de supprimer la data d'une clé
+    /// - Parameter key: la clé de la data à supprimer
     func delete(key: String) {
         let query: [String: Any] = [
             kSecClass as String: kSecClassGenericPassword,
@@ -69,7 +75,10 @@ class KeychainService: KeychainServiceProtocol {
         SecItemDelete(query as CFDictionary)
     }
     
-    // Permet de récuperer la data au format UUID
+    
+    /// Permet de recupérer le tokan associé à une clé
+    /// - Parameter key: l'username du token
+    /// - Returns: le token si la clé existe, nil sinon
     func getToken(key: String) -> UUID? {
         guard let data = load(key: key),
               let tokenString = String(data: data, encoding: .utf8),
@@ -78,6 +87,5 @@ class KeychainService: KeychainServiceProtocol {
         }
         return token
     }
-    
 }
 

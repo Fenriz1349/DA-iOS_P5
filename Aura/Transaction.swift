@@ -7,6 +7,7 @@
 
 import Foundation
 
+// Une Transaction, avec son intitulé et sa valeur
 struct Transaction: Codable, Identifiable {
     let id = UUID()
     let label: String

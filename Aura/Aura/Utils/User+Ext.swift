@@ -16,10 +16,19 @@ extension User {
     }
     
     static var defaultUser: User {
-        return User(userEmail: Email.from("default@example.com")!, currentBalance: 12345.67, transactions: [
+        return User(username: "default@example.com", currentBalance: 12345.67, transactions: [
             Transaction(label: "Starbucks", value: -5.50),
             Transaction(label: "Amazon Purchase", value: -34.99),
             Transaction(label: "Salary", value: 2500.00)
         ])
+    }
+    
+    static var defaultAccountResponse: AccountResponse {
+        AccountResponse(currentBalance: 12345.67,
+                        transactions: [
+                            Transaction(label: "Starbucks", value: -5.50),
+                            Transaction(label: "Amazon Purchase", value: -34.99),
+                            Transaction(label: "Salary", value: 2500.00)
+                        ])
     }
 }

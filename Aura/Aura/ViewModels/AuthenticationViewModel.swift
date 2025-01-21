@@ -28,8 +28,13 @@ class AuthenticationViewModel: ObservableObject {
             self.repository = repository
             self.keychain = keychain
         }
-            
-    func login(usermail: String, password: String) async {
+    
+    /// Fonction pour se connecter, verifier que le username est bien une adresse email,
+    /// Qu'on récupère bien le token, ensuite le stocker dans le keychain puis créer le user qui sera envoyé au appViewModel
+    /// - Parameters:
+    ///   - username: le username pour tenter le login
+    ///   - password: le password pour tenter le login
+    func login(username: String, password: String) async {
         // Vérifier la connexion au serveur
         guard await repository.tryGet() else {
             autenticationIsError = true
@@ -38,7 +43,7 @@ class AuthenticationViewModel: ObservableObject {
         }
         
         // Vérifier le format de l'email
-        guard let username = Email.from(usermail) else {
+        guard Email.from(username) != nil else {
             autenticationIsError = true
             authenticationErrorMessage = "invalidMailFormat".localized
             return
@@ -52,18 +57,18 @@ class AuthenticationViewModel: ObservableObject {
         }
         
         // Sauvegarder le token dans le Keychain
-        guard keychain.save(key: usermail, data: Data(token.uuidString.utf8)) else {
+        guard keychain.save(key: username, data: Data(token.uuidString.utf8)) else {
             autenticationIsError = true
             authenticationErrorMessage = "tokenFail".localized
             return
         }
         
         // Créer un utilisateur
-        let user = User(userEmail: username)
+        let user = User(username: username)
         
         // Login réussi
         appViewModel.loginUser(user: user)
         onLoginSucceed(user)
-        print("L'utilisateur \(appViewModel.userApp.email) vient nous dire Ah que Coucou!")
+        print("L'utilisateur \(appViewModel.userApp.username) vient nous dire Ah que Coucou!")
     }
 }

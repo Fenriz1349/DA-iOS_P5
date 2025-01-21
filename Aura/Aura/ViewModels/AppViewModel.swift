@@ -14,6 +14,8 @@ class AppViewModel: ObservableObject {
     var accountViewModel: AccountViewModel?
     var moneyTransferViewModel: MoneyTransferViewModel?
     
+    /// Permet de set isLogged à true et le userApp à celui passer en paramètre
+    /// - Parameter user: le user qui s'est loggé
     func loginUser(user: User) {
         self.isLogged = true
         self.userApp = user
@@ -29,6 +31,7 @@ class AppViewModel: ObservableObject {
         )
     }
     
+    /// Pour mettre à jour userApp après le log avec des données récupérées et créer accountViewModel et moneyTransferViewModel
     func updateAppViewModel() {
         guard isLogged else { return }
         
@@ -39,10 +42,5 @@ class AppViewModel: ObservableObject {
         // Créer un MoneyTransferViewModel
         let moneytransferRepository = MoneyTransfertRepository(client: ConnectorMoneyTransfer())
         self.moneyTransferViewModel = MoneyTransferViewModel(repository: moneytransferRepository, appViewModel: self)
-        
-        // Appeler setUser() dans AccountViewModel pour récupérer les informations de l'utilisateur
-//        Task {
-//            await self.accountViewModel?.updateAppUser()
-//        }
     }
 }

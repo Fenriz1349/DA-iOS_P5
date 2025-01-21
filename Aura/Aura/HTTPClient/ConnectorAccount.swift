@@ -11,8 +11,8 @@ protocol HTTPClientAccount: HTTPClient {
     func performGetAccount(username: String) async throws -> Data
 }
 
+// Connector pour récupérer la currentBalance et la liste des Transactions d'un user
 class ConnectorAccount: Connector, HTTPClientAccount {
-    
     private let keychainService: KeychainServiceProtocol
     
     init(session: URLSession = URLSession(configuration: .ephemeral),
@@ -21,6 +21,9 @@ class ConnectorAccount: Connector, HTTPClientAccount {
             super.init(session: session)
         }
     
+    /// Permet de récupérer le currentBalance et les transactions d'un user
+    /// - Parameter username: username du user
+    /// - Returns: la data dans un Json
     func performGetAccount(username: String) async throws -> Data {
         // Récuperation du token dans le keychainService
         let tokenKeychain = KeychainService()

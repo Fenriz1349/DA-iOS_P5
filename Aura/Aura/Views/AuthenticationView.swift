@@ -30,7 +30,7 @@ struct AuthenticationView: View {
                                 type: .password)
                 Button(action: {
                     Task {
-                        await authenticationViewModel.login(usermail: username, password: password)
+                        await authenticationViewModel.login(username: username, password: password)
                         await authenticationViewModel.appViewModel.accountViewModel?.updateAppUser()
                     
                     }

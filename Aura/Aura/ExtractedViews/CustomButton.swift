@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+// Bouton qui affiche un Text avec optionnellement une Icone avant
 struct CustomButton: View {
     let icon : String?
     let message : String
@@ -28,5 +29,5 @@ struct CustomButton: View {
 }
 
 #Preview {
-    CustomButton(icon: IconName.listBullet, message: "seeDetails".localized, color: .customGreen)
+    CustomButton(icon: IconName.listBullet, message: "seeDetails".localized, color: .accentColor)
 }

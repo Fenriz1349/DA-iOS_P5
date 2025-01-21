@@ -7,6 +7,7 @@
 
 import Foundation
 
+// struct de la data récupérée avec le token d'un User
 struct AccountResponse: Codable {
     let currentBalance: Double
     let transactions: [Transaction]

@@ -7,6 +7,7 @@
 
 import Foundation
 
+// Struct pour gérer les SFSymbol de l'app
 struct IconName {
     static let person = "person.circle"
     static let personCirle = "person.crop.circle"

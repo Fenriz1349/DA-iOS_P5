@@ -15,6 +15,7 @@ class AuraTestsConnector: XCTestCase {
         XCTAssertEqual(config.authURLString, "http://127.0.0.1:8080/auth")
         XCTAssertEqual(config.authURL, URL(string: "http://127.0.0.1:8080/auth")!)
         XCTAssertEqual(config.accountURL, URL(string: "http://127.0.0.1:8080/account")!)
+        XCTAssertEqual(config.moneyURL, URL(string: "http://127.0.0.1:8080/account/transfer")!)
     }
     
     func testCreateURLRequest() throws {

@@ -18,11 +18,15 @@ struct AccountView: View {
         NavigationView {
             VStack(spacing: 20) {
                 AccountHeader(balance: user.currentBalance)
-                CustomImage(image: IconName.euroCircle, size: 80, color: .customGreen)
-                RecentTransactionList(transactions: user.transactions.getRecentTransactions(limit: 3))
+                CustomImage(image: IconName.euroCircle, size: 80, color: .accentColor)
+                TransactionsList(title: "recentTransaction".localized,
+                                 limit: 3,
+                                 transactions: user.transactions)
                 
                 NavigationLink(destination: AccountDetailView(user: accountViewModel.appViewModel.userApp)) {
-                    CustomButton(icon: IconName.listBullet, message: "seeDetails".localized, color: .customGreen)
+                    CustomButton(icon: IconName.listBullet,
+                                 message: "seeDetails".localized,
+                                 color: .accent)
                 }
                 VStack {
                     if let message = accountViewModel.accountErrorMessage {
@@ -40,11 +44,6 @@ struct AccountView: View {
                 Spacer()
             }
             .padding(.horizontal)
-//            .onAppear {
-//                    Task {
-//                       await accountViewModel.updateAppUser()
-//                    }
-//            }
             .onTapGesture {
                 self.endEditing(true) 
             }

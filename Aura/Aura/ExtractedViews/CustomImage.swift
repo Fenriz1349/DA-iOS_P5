@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+// Permet d'afficher une image carré, de lui donner une couleur et de l'animer
 struct CustomImage: View {
     let image: String
     let size: CGFloat

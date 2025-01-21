@@ -81,7 +81,7 @@ class AuraTestsAuthenticationRepository: XCTestCase {
         
         
         // When
-        let result = await repository.getTokenFrom(username: email, password: password)
+        let result = await repository.getTokenFrom(username: email.emailAdress, password: password)
         
         // Then
         XCTAssertEqual(result?.uuidString, validUUIDString)
@@ -101,7 +101,7 @@ class AuraTestsAuthenticationRepository: XCTestCase {
         let repository = AuthenticationRepository(client: mockClient)
         
         // When
-        let result = await repository.getTokenFrom(username: email, password: password)
+        let result = await repository.getTokenFrom(username: email.emailAdress, password: password)
         
         // Then
         XCTAssertNil(result)
@@ -116,7 +116,7 @@ class AuraTestsAuthenticationRepository: XCTestCase {
           let repository = AuthenticationRepository(client: mockClient)
           
           // When
-        let result = await repository.getTokenFrom(username: email, password: password)
+        let result = await repository.getTokenFrom(username: email.emailAdress, password: password)
           
           // Then
           XCTAssertNil(result)

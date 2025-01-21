@@ -7,8 +7,8 @@
 
 import Foundation
 
+// Stock les differents adresse URL
 struct AppConfig {
-
     let baseURLString: String = "http://127.0.0.1:8080"
     var authURLString: String {
         baseURLString + "/auth"

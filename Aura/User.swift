@@ -7,22 +7,15 @@
 
 import Foundation
 
+// Class d'un user de l'app, elle permet de stocke son username, et ses datas recupérées 
 class User: Identifiable {
     let id = UUID()
-    let userEmail : Email
+    let username : String
     var currentBalance: Double
     var transactions: [Transaction]
     
-    var totalAmount: Double {
-        return transactions.map {$0.value}.reduce(0,+)
-    }
-    
-    var email: String {
-        self.userEmail.emailAdress
-    }
-    
-    init(userEmail: Email, currentBalance: Double = 0.0, transactions: [Transaction] = []) {
-        self.userEmail = userEmail
+    init(username: String, currentBalance: Double = 0.0, transactions: [Transaction] = []) {
+        self.username = username
         self.currentBalance = currentBalance
         self.transactions = transactions
     }

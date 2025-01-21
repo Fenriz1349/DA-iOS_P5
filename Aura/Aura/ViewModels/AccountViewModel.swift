@@ -19,8 +19,10 @@ class AccountViewModel: ObservableObject {
         self.appViewModel = appViewModel
     }
     
+    /// Permet de recupérer les données du compte depuis le repository
+    /// - Returns: les données d'un User
     func getUserResponse() async -> AccountResponse? {
-        guard let accountResponse = await repository.getAccountResponse(from: appViewModel.userApp.email) else {
+        guard let accountResponse = await repository.getAccountResponse(from: appViewModel.userApp.username) else {
             accountIsError = true
             accountErrorMessage = "fetchAccount".localized
             return nil
@@ -28,15 +30,15 @@ class AccountViewModel: ObservableObject {
         return accountResponse
     }
     
+    /// Permet de mettre à jour le userApp avec les données si on les reçoit
     func updateAppUser() async {
         guard let response = await getUserResponse() else {
             accountIsError = true
             accountErrorMessage = "fetchAccount".localized
             return
         }
-
         appViewModel.userApp.updateUser(from: response)
-        let sucessMessage = String(format: NSLocalizedString("loginSucess".localized, comment: ""), appViewModel.userApp.email)
+        let sucessMessage = String(format: NSLocalizedString("loginSucess".localized, comment: ""), appViewModel.userApp.username)
         accountErrorMessage = sucessMessage
         accountIsError = false
         objectWillChange.send()

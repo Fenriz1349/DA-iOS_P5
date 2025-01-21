@@ -7,13 +7,18 @@
 
 import Foundation
 
-// Il sera de protocol HTTPCLient qui garanti qu'il aura toujours la fonction performAuthRequest
+// Le protocol HTTPCLient qui garanti qu'il aura toujours la fonction performAuthRequest
 protocol HTTPClientAuthentication: HTTPClient {
     func performAuthRequest(username: String, password: String) async throws -> Data
 }
 
+// Connector qui gère l'appel reseau pour recupéré le token d'un user pour le login
 class ConnectorAuthentication: Connector, HTTPClientAuthentication {
-    
+    ///  Renvoie la data lié à un unsername et un password
+    /// - Parameters:
+    ///   - username:username du user
+    ///   - password: password du user
+    /// - Returns: le token du user dans un Json
     func performAuthRequest(username: String, password: String) async throws -> Data {
         // Créer la requête POST
         let url = AppConfig().authURL

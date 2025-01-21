@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+// Header contenant le titre et un montant en Euro
 struct AccountHeader: View {
     let balance: Double
     var body: some View {
@@ -15,7 +16,7 @@ struct AccountHeader: View {
                 .font(.headline)
             Text(balance.toEuroFormat())
                 .font(.system(size: 60, weight: .bold))
-                .foregroundColor(.customGreen)
+                .foregroundColor(.accent)
         }
         .padding(.top)
     }

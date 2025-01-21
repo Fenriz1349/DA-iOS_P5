@@ -7,7 +7,7 @@
 
 import Foundation
 
-// Le Connector ne va s'occuper que de gerer les appels réseaux
+// Le Connector pour gerer les appels réseaux
 protocol HTTPClient {
     func performRequest(from url: URL, with method: HTTPMethod) async throws -> Data
 }
@@ -20,12 +20,14 @@ class Connector: HTTPClient {
         self.session = session
     }
     
+    // Permet de créer la requete URL
     func createURLRequest(from url: URL, with method: HTTPMethod) throws -> URLRequest {
-            var request = URLRequest(url: url)
-            request.httpMethod = method.rawValue
-            return request
-        }
-        
+        var request = URLRequest(url: url)
+        request.httpMethod = method.rawValue
+        return request
+    }
+    
+    // Permet d'executer une requete URL
     func executeDataRequest(_ request: URLRequest) async throws -> (Data, HTTPURLResponse) {
         let (data, response) = try await session.data(for: request)
         
@@ -36,6 +38,7 @@ class Connector: HTTPClient {
         return (data, httpResponse)
     }
     
+    // Permet de recuperer la data d'une requete URL
     func performRequest(from url: URL, with method: HTTPMethod) async throws -> Data {
         let request = try createURLRequest(from: url, with: method)
         let (data, httpResponse) = try await executeDataRequest(request)

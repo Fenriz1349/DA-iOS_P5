@@ -15,8 +15,9 @@ class AuthenticationRepository {
             self.client = client
         }
     
-    // Fonction pour tester la connexion avec le serveur et traiter tous les cas d'erreur.
-    // Si la connexion est bonne elle renvoie "It works!"
+    /// Fonction pour tester la connexion avec le serveur et traiter tous les cas d'erreur.
+    /// - Parameter url: l'url pour tester la connexion
+    /// - Returns: Si la connexion est bonne elle renvoie "It works!"
     func tryGet(url: URL = AppConfig().baseUrl) async -> Bool {
             let expectedData = "It works!"
             do {
@@ -30,9 +31,17 @@ class AuthenticationRepository {
             }
         }
     
-    func getTokenFrom(username: Email, password: String) async -> UUID? {
+    /// Permet de récupérer le token du User lors du login
+    /// - Parameters:
+    ///   - username: le username du user
+    ///   - password: le password du user
+    /// - Returns: le token si il est au bon format et que le couple username- password est correcte, nil sinon
+    func getTokenFrom(username: String, password: String) async -> UUID? {
         do {
-            let data = try await client.performAuthRequest(username: username.emailAdress, password: password)
+            guard username.isValidEmail() else {
+                return nil
+            }
+            let data = try await client.performAuthRequest(username: username, password: password)
             let token = try JSONMapping.jsonAuthDecoder(data) 
             return token
         } catch {

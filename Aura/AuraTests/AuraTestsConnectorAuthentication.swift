@@ -66,6 +66,4 @@ class AuraTestsConnectorAuthentication: XCTestCase {
             XCTAssertEqual(error.code, URLError.Code.badServerResponse)
         }
     }
-    
-   
 }

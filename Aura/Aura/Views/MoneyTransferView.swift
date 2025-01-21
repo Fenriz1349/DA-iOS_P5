@@ -14,7 +14,7 @@ struct MoneyTransferView: View {
     
     var body: some View {
         VStack(spacing: 20) {
-            CustomImage(image: IconName.leftRightArrowFill, size: 80, color: .customGreen, isAnimated: true)
+            CustomImage(image: IconName.leftRightArrowFill, size: 80, color: .accent, isAnimated: true)
             Text("sendMoney".localized)
                 .font(.largeTitle)
                 .fontWeight(.heavy)
@@ -43,7 +43,7 @@ struct MoneyTransferView: View {
                 }
             })
             {
-                CustomButton(icon: IconName.rigthArrow, message: "send".localized, color: .customGreen)
+                CustomButton(icon: IconName.rigthArrow, message: "send".localized, color: .accentColor)
             }
             VStack {
                 if let message = moneyTransferViewModel.transferErrorMessage {
@@ -51,7 +51,7 @@ struct MoneyTransferView: View {
                         .transition(.move(edge: .top).combined(with: .opacity))
                 }
             }
-            .frame(height: moneyTransferViewModel.transferIsError ? 80 : 120)
+            .frame(height: 120)
         }
         .padding(.horizontal, 40)
         .onTapGesture {

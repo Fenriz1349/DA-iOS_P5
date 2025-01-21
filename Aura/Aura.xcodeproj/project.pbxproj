@@ -14,7 +14,6 @@
 		53D418912AC70A920070ADB1 /* AuthenticationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53D418902AC70A920070ADB1 /* AuthenticationView.swift */; };
 		53D418932AC70AB10070ADB1 /* AccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53D418922AC70AB10070ADB1 /* AccountView.swift */; };
 		53D418952AC70ABF0070ADB1 /* MoneyTransferView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53D418942AC70ABF0070ADB1 /* MoneyTransferView.swift */; };
-		53D418992AC70FD80070ADB1 /* Color+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53D418982AC70FD80070ADB1 /* Color+Extensions.swift */; };
 		53D4189B2AC711990070ADB1 /* AuthenticationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53D4189A2AC711990070ADB1 /* AuthenticationViewModel.swift */; };
 		53D4189D2AC715AA0070ADB1 /* AccountViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53D4189C2AC715AA0070ADB1 /* AccountViewModel.swift */; };
 		53D4189F2AC717890070ADB1 /* MoneyTransferViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53D4189E2AC717890070ADB1 /* MoneyTransferViewModel.swift */; };
@@ -27,9 +26,8 @@
 		681B91B92D1F046900EE38BD /* User+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 681B91B82D1F046900EE38BD /* User+Ext.swift */; };
 		681B91BB2D1F09BB00EE38BD /* AccountHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 681B91BA2D1F09BB00EE38BD /* AccountHeader.swift */; };
 		681B91BD2D1F0A8E00EE38BD /* AccountRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 681B91BC2D1F0A8E00EE38BD /* AccountRow.swift */; };
-		681B91BF2D1F0B7300EE38BD /* RecentTransactionList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 681B91BE2D1F0B7300EE38BD /* RecentTransactionList.swift */; };
 		681B91C12D1F0DD200EE38BD /* Transaction+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 681B91C02D1F0DD200EE38BD /* Transaction+Ext.swift */; };
-		686307482D3000E000011353 /* AllTransactionsList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 686307472D3000E000011353 /* AllTransactionsList.swift */; };
+		686307482D3000E000011353 /* TransactionsList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 686307472D3000E000011353 /* TransactionsList.swift */; };
 		686307602D301F3300011353 /* IconName.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6863075F2D301F3300011353 /* IconName.swift */; };
 		686307782D31097200011353 /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 686307772D31097200011353 /* CustomButton.swift */; };
 		6863077A2D31151C00011353 /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 686307792D31151C00011353 /* CustomTextField.swift */; };
@@ -72,7 +70,6 @@
 		53D418902AC70A920070ADB1 /* AuthenticationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationView.swift; sourceTree = "<group>"; };
 		53D418922AC70AB10070ADB1 /* AccountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountView.swift; sourceTree = "<group>"; };
 		53D418942AC70ABF0070ADB1 /* MoneyTransferView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoneyTransferView.swift; sourceTree = "<group>"; };
-		53D418982AC70FD80070ADB1 /* Color+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+Extensions.swift"; sourceTree = "<group>"; };
 		53D4189A2AC711990070ADB1 /* AuthenticationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationViewModel.swift; sourceTree = "<group>"; };
 		53D4189C2AC715AA0070ADB1 /* AccountViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountViewModel.swift; sourceTree = "<group>"; };
 		53D4189E2AC717890070ADB1 /* MoneyTransferViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoneyTransferViewModel.swift; sourceTree = "<group>"; };
@@ -85,9 +82,8 @@
 		681B91B82D1F046900EE38BD /* User+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "User+Ext.swift"; sourceTree = "<group>"; };
 		681B91BA2D1F09BB00EE38BD /* AccountHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountHeader.swift; sourceTree = "<group>"; };
 		681B91BC2D1F0A8E00EE38BD /* AccountRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountRow.swift; sourceTree = "<group>"; };
-		681B91BE2D1F0B7300EE38BD /* RecentTransactionList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentTransactionList.swift; sourceTree = "<group>"; };
 		681B91C02D1F0DD200EE38BD /* Transaction+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Transaction+Ext.swift"; sourceTree = "<group>"; };
-		686307472D3000E000011353 /* AllTransactionsList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllTransactionsList.swift; sourceTree = "<group>"; };
+		686307472D3000E000011353 /* TransactionsList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionsList.swift; sourceTree = "<group>"; };
 		6863075F2D301F3300011353 /* IconName.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconName.swift; sourceTree = "<group>"; };
 		686307772D31097200011353 /* CustomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButton.swift; sourceTree = "<group>"; };
 		686307792D31151C00011353 /* CustomTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
@@ -195,13 +191,13 @@
 			isa = PBXGroup;
 			children = (
 				53D4188C2AC709F40070ADB1 /* AppViewModel.swift */,
-				53D4189A2AC711990070ADB1 /* AuthenticationViewModel.swift */,
-				53D4189C2AC715AA0070ADB1 /* AccountViewModel.swift */,
-				53D4189E2AC717890070ADB1 /* MoneyTransferViewModel.swift */,
 				68C99C962CF9D0D5002F75A0 /* AuthenticationRepository.swift */,
-				68B606502D030C04007D4EC6 /* DataMapping.swift */,
+				53D4189A2AC711990070ADB1 /* AuthenticationViewModel.swift */,
 				681A95622D1568D500C765FF /* AccountRepository.swift */,
+				53D4189C2AC715AA0070ADB1 /* AccountViewModel.swift */,
 				686307E52D3155D000011353 /* MoneyTransfertRepository.swift */,
+				53D4189E2AC717890070ADB1 /* MoneyTransferViewModel.swift */,
+				68B606502D030C04007D4EC6 /* DataMapping.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -209,7 +205,6 @@
 		53D418962AC70FC50070ADB1 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
-				53D418982AC70FD80070ADB1 /* Color+Extensions.swift */,
 				681B91B82D1F046900EE38BD /* User+Ext.swift */,
 				53D418A02AC71B8F0070ADB1 /* View+Extensions.swift */,
 				68C99C8C2CF9AF2A002F75A0 /* Double+Ext.swift */,
@@ -248,8 +243,7 @@
 				68C99C8F2CF9B76C002F75A0 /* InfoLabel.swift */,
 				681B91BA2D1F09BB00EE38BD /* AccountHeader.swift */,
 				681B91BC2D1F0A8E00EE38BD /* AccountRow.swift */,
-				681B91BE2D1F0B7300EE38BD /* RecentTransactionList.swift */,
-				686307472D3000E000011353 /* AllTransactionsList.swift */,
+				686307472D3000E000011353 /* TransactionsList.swift */,
 				686307772D31097200011353 /* CustomButton.swift */,
 				686307792D31151C00011353 /* CustomTextField.swift */,
 				6863077B2D31292600011353 /* CustomGradient.swift */,
@@ -379,10 +373,9 @@
 			files = (
 				53D4187C2AC7099A0070ADB1 /* AuraApp.swift in Sources */,
 				53D418952AC70ABF0070ADB1 /* MoneyTransferView.swift in Sources */,
-				686307482D3000E000011353 /* AllTransactionsList.swift in Sources */,
+				686307482D3000E000011353 /* TransactionsList.swift in Sources */,
 				53D4189B2AC711990070ADB1 /* AuthenticationViewModel.swift in Sources */,
 				53D4189D2AC715AA0070ADB1 /* AccountViewModel.swift in Sources */,
-				681B91BF2D1F0B7300EE38BD /* RecentTransactionList.swift in Sources */,
 				68C99C8D2CF9AF2A002F75A0 /* Double+Ext.swift in Sources */,
 				681B91BB2D1F09BB00EE38BD /* AccountHeader.swift in Sources */,
 				681A955E2D15612900C765FF /* ConnectorAccount.swift in Sources */,
@@ -415,7 +408,6 @@
 				686307882D3146CA00011353 /* String+Ext.swift in Sources */,
 				68B606512D030C04007D4EC6 /* DataMapping.swift in Sources */,
 				686307782D31097200011353 /* CustomButton.swift in Sources */,
-				53D418992AC70FD80070ADB1 /* Color+Extensions.swift in Sources */,
 				681B91B92D1F046900EE38BD /* User+Ext.swift in Sources */,
 				681A95582D155D9700C765FF /* ConnectorAuthentication.swift in Sources */,
 			);

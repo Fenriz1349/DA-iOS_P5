@@ -8,7 +8,9 @@
 import Foundation
 
 struct DataMapping {
-    // retourn la data sous forme de string si elle et bien codé en utf8
+    /// Permet de tester puis de retourner une data si elle est en utf8
+    /// - Parameter data: la data à convertir
+    /// - Returns: La data sous forme de string si elle et bien codé en utf8, nil sinon
     static func getStringFrom(_ data: Data) -> String? {
         guard let stringResponse = String(data: data, encoding: .utf8) else {
             return nil

@@ -7,7 +7,9 @@
 
 import SwiftUI
 
-// Affiche un message sur fond rouge
+// Permet d'afficher un Text :
+// - sur fond rouge avec un point d'exclamation si c'est une erreur
+// - sur fond vert avec un check si ce n'est pas une erreur
 struct InfoLabel: View {
     let message : String
     let isError: Bool
@@ -19,8 +21,7 @@ struct InfoLabel: View {
             }
             .padding()
             .foregroundStyle(.white)
-            .fontWeight(.semibold)
-            .background(isError ? .customRed : .customGreen)
+            .background(isError ? .customRed : .accent)
             .cornerRadius(10)
         }
 }

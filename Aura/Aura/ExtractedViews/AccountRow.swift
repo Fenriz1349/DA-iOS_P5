@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+// Represente une ligne dans les listes de transactions
 struct AccountRow: View {
     let transaction: Transaction
     var body: some View {

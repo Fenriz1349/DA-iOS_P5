@@ -49,7 +49,6 @@ class MockURLSession {
 
 
 class MockHTTPClient: HTTPClient {
-    
     var mockData: Data?
     var mockError: Error?
 
@@ -97,7 +96,25 @@ class MockHTTPClientAccount: HTTPClientAccount {
         }
         return mockData ?? Data()
     }
+}
+
+class MockHTTPClientMoneyTransfer: HTTPClientMoneyTransfer {
+    var mockData: Data?
+    var mockError: Error?
+    var isPerformSucess: Bool = false
+    func performMoneySending(username: String, recipient: String, amount: Decimal) async throws -> Bool {
+        if let error = mockError {
+            throw error
+        }
+        return isPerformSucess
+    }
     
+    func performRequest(from url: URL, with method: Aura.HTTPMethod) async throws -> Data {
+        if let error = mockError {
+            throw error
+        }
+        return mockData ?? Data()
+    }
 }
 
 class MockAuthenticationRepository: AuthenticationRepository {
@@ -108,8 +125,22 @@ class MockAuthenticationRepository: AuthenticationRepository {
         return tryGetResult
     }
 
-    override func getTokenFrom(username: Email, password: String) async -> UUID? {
+    override func getTokenFrom(username: String, password: String) async -> UUID? {
         return getTokenResult
+    }
+}
+
+class MockAccountRepository: AccountRepository {
+    var accountResponse: AccountResponse? 
+    override func getAccountResponse(from username: String) async -> AccountResponse? {
+        return accountResponse
+    }
+}
+
+class MockMoneyTransfertRepository: MoneyTransfertRepository {
+    var isTransferSucess: Bool = false
+    override func trySendMoney(username: String, recipient:String, amount: Decimal) async -> Bool {
+        return isTransferSucess
     }
 }
 
