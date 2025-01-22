@@ -24,9 +24,17 @@ struct TransactionsList: View {
             Text(title)
                 .font(.headline)
                 .padding([.horizontal])
-            ScrollView {
-                ForEach(selectedTransaction) { transaction in
-                    AccountRow(transaction: transaction)
+            if selectedTransaction.count <= 5 {
+                VStack(spacing: 10) {
+                    ForEach(selectedTransaction) { transaction in
+                        AccountRow(transaction: transaction)
+                    }
+                }
+            } else {
+                ScrollView {
+                    ForEach(selectedTransaction) { transaction in
+                        AccountRow(transaction: transaction)
+                    }
                 }
             }
         }

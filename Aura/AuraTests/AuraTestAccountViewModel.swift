@@ -77,7 +77,7 @@ class AuraTestsAccountViewModel: XCTestCase {
         
         // When
         await viewModel.updateAppUser()
-        let sucessMessage = await String(format: NSLocalizedString("loginSucess".localized, comment: ""), appViewModel.userApp.username)
+        let sucessMessage = await String(format: "loginSucess".localized, appViewModel.userApp.username)
         // Then
         await MainActor.run {
             XCTAssertEqual(viewModel.accountErrorMessage, sucessMessage)

@@ -57,7 +57,7 @@ class AuraTestsMoneyTransferViewModel: XCTestCase {
         // Then
         await MainActor.run {
             XCTAssertFalse(viewModel.transferIsError)
-            XCTAssertEqual(viewModel.transferErrorMessage, String(format: NSLocalizedString("transferSucess".localized, comment: ""), "100,00€", "recipient@example.com"))
+            XCTAssertEqual(viewModel.transferErrorMessage, String(format: "transferSucess".localized, "100,00€", "recipient@example.com"))
         }
     }
 

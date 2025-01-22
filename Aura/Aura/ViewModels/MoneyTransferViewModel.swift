@@ -41,7 +41,7 @@ class MoneyTransferViewModel: ObservableObject {
         let user = appViewModel.userApp
         if await repository.trySendMoney(username: user.username, recipient: recipient, amount: decimal) {
             let amountString = decimal.toEuroFormat()
-            let sucessMessage = String(format: NSLocalizedString("transferSucess".localized, comment: ""), amountString, recipient)
+            let sucessMessage = String(format: "transferSucess".localized, amountString, recipient)
             transferErrorMessage = sucessMessage
             transferIsError = false
         } else {

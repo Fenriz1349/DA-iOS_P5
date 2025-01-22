@@ -32,7 +32,6 @@ struct AuthenticationView: View {
                     Task {
                         await authenticationViewModel.login(username: username, password: password)
                         await authenticationViewModel.appViewModel.accountViewModel?.updateAppUser()
-                    
                     }
                 }) {
                     CustomButton(icon: nil, message: "login".localized, color: .black)

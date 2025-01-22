@@ -38,7 +38,7 @@ class AccountViewModel: ObservableObject {
             return
         }
         appViewModel.userApp.updateUser(from: response)
-        let sucessMessage = String(format: NSLocalizedString("loginSucess".localized, comment: ""), appViewModel.userApp.username)
+        let sucessMessage = String(format: "loginSucess".localized, appViewModel.userApp.username)
         accountErrorMessage = sucessMessage
         accountIsError = false
         objectWillChange.send()
