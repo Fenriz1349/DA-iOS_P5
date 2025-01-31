@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct DataMapping {
+enum DataMapping {
     /// Permet de tester puis de retourner une data si elle est en utf8
     /// - Parameter data: la data à convertir
     /// - Returns: La data sous forme de string si elle et bien codé en utf8, nil sinon
@@ -19,7 +19,7 @@ struct DataMapping {
     }
 }
 
-struct JSONMapping {
+enum JSONMapping {
     /// Fonction pour encoder le username et le password pour créer le body pour le login
     /// - Parameters:
     ///   - username: email de l'utilisateur
